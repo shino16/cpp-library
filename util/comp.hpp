@@ -2,11 +2,11 @@
 #include "prelude.hpp"
 
 template <class T>
-class Compress {
+class compress {
  public:
-  Compress(vector<T> data) : data(move(data)) { init(); }
+  compress(vector<T> data) : data(move(data)) { init(); }
   template <class Iter>
-  Compress(Iter f, Iter l) : data(f, l) { init(); }
+  compress(Iter f, Iter l) : data(f, l) { init(); }
   int size() const { return data.size(); }
   int operator()(const T& x) const {
     auto it = lower_bound(data.begin(), data.end(), x);

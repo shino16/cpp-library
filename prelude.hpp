@@ -5,9 +5,7 @@
 #endif
 #include <bits/stdc++.h>
 using namespace std;
-using uint = unsigned;
 using ll = long long;
-using ull = unsigned long long;
 #define rep2(i, m, n) for (auto i = (m); i < (n); i++)
 #define rep(i, n) rep2(i, 0, n)
 #define repr2(i, m, n) for (auto i = (n); i-- > (m);)
