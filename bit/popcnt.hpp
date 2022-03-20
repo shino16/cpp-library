@@ -4,9 +4,9 @@
 template <class T>
 __attribute__ ((target ("popcnt"))) int popcnt(T a) {
     if constexpr (sizeof(T) <= sizeof(int)) {
-        return __builtin_clz((int)a);
+        return __builtin_popcount((int)a);
     } else if constexpr (sizeof(T) <= sizeof(ll)) {
-        return __builtin_clzll((ll)a);
+        return __builtin_popcountll((ll)a);
     } else if constexpr (sizeof(T) <= sizeof(ll) * 2) {
         return popcnt((ll)a) + popcnt((ll)(a >> sizeof(ll) * 8));
     }

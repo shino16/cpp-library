@@ -13,6 +13,9 @@ class compress {
     assert(*it == x);
     return it - data.begin();
   }
+  bool has(const T& x) const {
+    return binary_search(data.begin(), data.end(), x);
+  }
   const T& operator[](int i) const { return data[i]; }
 
  private:

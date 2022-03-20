@@ -34,7 +34,7 @@ class lazy_segment_tree {
     }
     return m.op(accl, accr);
   }
-  void act(int l, int r, actor_type x) {
+  void apply(int l, int r, actor_type x) {
     if (x == a.unit()) return;
     flush(trunc(l + size()));
     flush(trunc(r + size()) - 1);

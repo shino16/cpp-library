@@ -1,5 +1,5 @@
 #pragma once
-#include "graph.hpp"
+#include "graph0.hpp"
 
 template <class G>
 pair<vector<W<G>>, vector<V<G>>> bfs(const G& graph, V<G> s,

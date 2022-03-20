@@ -1,6 +1,7 @@
 #pragma once
 #include "alg.hpp"
 #include "prelude.hpp"
+#include "bit/ilog2.hpp"
 
 template <class M>
 class fenwick_tree {
@@ -14,7 +15,7 @@ class fenwick_tree {
     }
   }
   fenwick_tree(int n = 0, M m = M())
-      : fenwick_tree(vector<value_type>(n, m.unit()), m) {}
+      : fenwick_tree(vector<value_type>(n + 1, m.unit()), m) {}
   int size() const { return data.size() - 1; }
   void clear() { fill(data.begin(), data.end(), m.unit()); }
   void add(int i, value_type v) {
@@ -28,17 +29,22 @@ class fenwick_tree {
   }
   value_type sum(int l, int r) const { return m.op(m.inv(sum(l)), sum(r)); }
   template <class F>
-  int lower_bound(F pred = F()) const {
+  int partition_point(F pred = F()) const {
     int i = 0;
-    value_type acc = m.unit();
-    if (!pred(acc)) return i;
-    for (int w = bit_ceil(data.size()); w >>= 1;) {
+    value_type s = m.unit();
+    if (!pred(s)) return i;
+    for (int w = bit_floor(data.size()); w; w >>= 1) {
       if (i + w < data.size()) {
-        value_type acc2 = m.op(acc, data[i + w]);
-        if (pred(acc2)) i += w, acc = acc2;
+        value_type s2 = m.op(s, data[i + w]);
+        if (pred(s2)) i += w, s = s2;
       }
     }
     return i + 1;
+  }
+  // min i s.t. !comp(sum(i), x)
+  template <class Comp = less<value_type>>
+  int lower_bound(value_type x, Comp comp = Comp()) const {
+    return partition_point([&](value_type s) { return comp(s, x); });
   }
 
  private:

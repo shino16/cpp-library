@@ -2,9 +2,9 @@
 #include "prelude.hpp"
 
 template <class T>
-class Binom {
+class binom_t {
  public:
-  Binom(int n) : fact_(n), ifact_(n) {
+  binom_t(int n) : fact_(n), ifact_(n) {
     fact_[0] = T(1);
     for (int i = 0; i < n - 1; i++) assert(fact_[i] != 0), fact_[i + 1] = fact_[i] * T(i + 1);
     ifact_[n - 1] = T(1) / fact_[n - 1];
