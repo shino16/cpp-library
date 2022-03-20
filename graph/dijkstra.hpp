@@ -9,10 +9,10 @@ vector<W<G>> dijkstra(G& graph, int s) {
   hp.emplace(W<G>(0), s);
   dist[s] = W<G>(0);
   while (!hp.empty()) {
-    auto [w, v] = move(hp.top());
+    auto [w, v] = hp.top();
     hp.pop();
     if (w != dist[v]) continue;
-    g.adj(v, [&](auto&& e) {
+    g.adj(v, [&, v = v](auto&& e) {
       if (dist[e.to()] > dist[v] + e.w())
         dist[e.to()] = dist[v] + e.w(),
         hp.emplace(dist[e.to()], e.to());
