@@ -1,6 +1,6 @@
 #pragma once
 #include "prelude.hpp"
-#include "alg.hpp"
+#include "algebra.hpp"
 
 template <class M>
 class segment_tree {
@@ -17,9 +17,6 @@ class segment_tree {
     init();
   }
   segment_tree(int n = 0, M m = M()) : m(m), data(n * 2, m.unit()) {}
-  void init() {
-    repr2(i, 1, size()) data[i] = m.op(data[i << 1], data[i << 1 | 1]);
-  }
 
   int size() const { return data.size() / 2; }
   value_type prod(int l, int r) const {
@@ -30,17 +27,23 @@ class segment_tree {
     }
     return m.op(accl, accr);
   }
-  void add(int i, value_type v) { exec(i, [=](value_type& e) { e = m.op(e, v); }); }
-  void set(int i, value_type v) { exec(i, [=](value_type& e) { e = move(v); }); }
+  void add(int i, value_type v) {
+    exec(i, [=](value_type& e) { e = m.op(e, v); });
+  }
+  void set(int i, value_type v) {
+    exec(i, [=](value_type& e) { e = move(v); });
+  }
   template <class F>
   void exec(int i, F f) {
     f(data[i + size()]);
     for (i += size(); i >>= 1;) data[i] = m.op(data[i << 1], data[i << 1 | 1]);
   }
 
- public:
-  vector<value_type> data;
-
  private:
   M m;
+  vector<value_type> data;
+
+  void init() {
+    repr2(i, 1, size()) data[i] = m.op(data[i << 1], data[i << 1 | 1]);
+  }
 };

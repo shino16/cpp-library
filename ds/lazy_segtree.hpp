@@ -1,5 +1,5 @@
 #pragma once
-#include "alg.hpp"
+#include "algebra.hpp"
 #include "bit/ctz.hpp"
 #include "bit/ilog2.hpp"
 #include "prelude.hpp"

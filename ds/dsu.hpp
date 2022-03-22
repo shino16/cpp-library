@@ -1,9 +1,9 @@
 #pragma once
 #include "prelude.hpp"
 
-class union_find {
+class dsu {
  public:
-  union_find(int n) : par(n, -1), count_(n) {}
+  dsu(int n) : par(n, -1), count_(n) {}
   int size() const { return par.size(); }
   int count() const { return count_; }
   void clear() {

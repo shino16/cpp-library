@@ -2,7 +2,7 @@
 #include "graph.hpp"
 
 template <class G>
-vector<W<G>> dijkstra(G& graph, int s) {
+vector<W<G>> dijkstra(const G& graph, int s) {
   graph_trait<G> g(graph);
   vector<W<G>> dist(g.size(), numeric_limits<W<G>>::max());
   priority_queue<pair<W<G>, int>, vector<pair<W<G>, int>>, greater<>> hp;

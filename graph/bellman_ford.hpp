@@ -1,7 +1,7 @@
 #pragma once
 #include "graph.hpp"
 
-// (success, dist)
+// (fail, dist)
 template <class G>
 pair<bool, vector<W<G>>> bellman_ford(G& graph, int s) {
   const W<G> inf = numeric_limits<W<G>>::max();
@@ -22,5 +22,5 @@ pair<bool, vector<W<G>>> bellman_ford(G& graph, int s) {
     }
   }
   for (auto& d : dist) if (d >= inf / 2) d = numeric_limits<W<G>>::max();
-  return {success, move(dist)};
+  return {!success, move(dist)};
 }

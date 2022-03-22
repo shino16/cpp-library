@@ -1,5 +1,5 @@
 #pragma once
-#include "alg.hpp"
+#include "algebra.hpp"
 #include "prelude.hpp"
 #include "bit/ilog2.hpp"
 
@@ -14,6 +14,9 @@ class fenwick_tree {
         data[i + lsb(i)] = m.op(data[i + lsb(i)], data[i]);
     }
   }
+  template <class Iter>
+  fenwick_tree(Iter f, Iter l, M m = M())
+      : fenwick_tree(vector<value_type>(f, l), m) {}
   fenwick_tree(int n = 0, M m = M())
       : fenwick_tree(vector<value_type>(n + 1, m.unit()), m) {}
   int size() const { return data.size() - 1; }
@@ -51,4 +54,6 @@ class fenwick_tree {
   M m;
   vector<value_type> data;
   static int lsb(int a) { return a & -a; }
+  template <class, class>
+  friend class range_fenwick_tree;
 };

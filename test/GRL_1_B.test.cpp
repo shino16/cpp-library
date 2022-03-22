@@ -13,6 +13,6 @@ int main() {
     G[u].emplace_back(v, w);
   }
   auto [b, dist] = bellman_ford(G, r);
-  if (b) rep(i, n) if (dist[i] == INT_MAX) printf("INF\n"); else printf("%d\n", dist[i]);
-  else printf("NEGATIVE CYCLE\n");
+  if (b) printf("NEGATIVE CYCLE\n");
+  else rep(i, n) if (dist[i] == INT_MAX) printf("INF\n"); else printf("%d\n", dist[i]);
 }

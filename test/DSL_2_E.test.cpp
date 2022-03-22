@@ -1,7 +1,7 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_E"
 
 #include "prelude.hpp"
-#include "ds/fwk.hpp"
+#include "ds/fenwick.hpp"
 
 int n, q, c, s, t, x, i;
 
