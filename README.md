@@ -1,1 +1,1 @@
-# CP Library in C++
+# Competitive Programming Library in C++
