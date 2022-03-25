@@ -6,7 +6,7 @@
 int main() {
   int n, q, c, x, y;
   scanf("%d%d", &n, &q);
-  segment_tree rsq(n, monoid([] { return 0; }, plus{}));
+  segment_tree rsq(n, monoid(CONST(0), plus{}));
   while (q--) {
     scanf("%d%d%d", &c, &x, &y);
     if (c == 0)
