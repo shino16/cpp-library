@@ -20,6 +20,7 @@ struct weighted_edge {
 template <class Inner>
 struct basic_graph {
   using weight_type = int;
+  constexpr static bool weighted = false;
   const Inner& inner;
   basic_graph(const Inner& g) : inner(g) {}
   template <class F>
@@ -31,6 +32,7 @@ struct basic_graph {
 template <class Inner, class Weight>
 struct basic_weighted_graph {
   using weight_type = Weight;
+  constexpr static bool weighted = true;
   const Inner& inner;
   basic_weighted_graph(const Inner& g) : inner(g) {}
   template <class F>
