@@ -80,7 +80,7 @@ class scc {
   vector<vector<int>> contract() const {
     vector<vector<int>> res(n_cpnts);
     rep(v, g.size()) g.adj(v, [&](int u) {
-      if (id(v) != id(u)) res[v].push_back(u);
+      if (id(v) != id(u)) res[id(v)].push_back(id(u));
     });
     return res;
   }
