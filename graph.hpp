@@ -58,7 +58,7 @@ struct graph_trait<vector<int>[N]> : basic_graph<vector<int>[N]> {
 template <>
 struct graph_trait<vector<vector<int>>> : basic_graph<vector<vector<int>>> {
   using basic_graph<vector<vector<int>>>::basic_graph;
-  int size() const { return basic_graph<vector<vector<int>>>::inner.size(); }
+  int size() const { return this->inner.size(); }
 };
 
 template <size_t N, class Weight>
@@ -74,5 +74,5 @@ struct graph_trait<vector<vector<pair<int, Weight>>>>
     : basic_weighted_graph<vector<vector<pair<int, Weight>>>, Weight> {
   using basic_weighted_graph<vector<vector<pair<int, Weight>>>,
                              Weight>::basic_weighted_graph;
-  int size() const { return basic_graph<vector<vector<int>>>::inner.size(); }
+  int size() const { return this->inner.size(); }
 };

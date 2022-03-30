@@ -20,7 +20,6 @@ class reduced_graph : public graph_trait<G> {
 };
 
 // graph should be strongly connected
-// (fail, dist)
 template <class G>
 optional<vector<vector<W<G>>>> all_pairs_distances(G& graph) {
   const W<G> inf = numeric_limits<W<G>>::max();
