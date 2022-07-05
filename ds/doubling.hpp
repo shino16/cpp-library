@@ -5,7 +5,7 @@
 class doubling {
  public:
   template <class Iter>
-  doubling(Iter f, Iter l, int max_power)
+  doubling(Iter f, Iter l, ll max_power)
       : size(l - f), height(ilog2(max_power) + 1), data(height) {
     data[0].assign(f, l);
     rep(h, height - 1) {
@@ -16,15 +16,11 @@ class doubling {
   template <class Iter>
   doubling(Iter f, Iter l) : doubling(f, l, l - f) {}
 
-  int apply(int power, int x) const {
-    while (power) {
-      int h = ctz(power);
-      x = data[h][x];
-      power ^= 1 << h;
-    }
+  int apply(ll power, int x) const {
+    rep(h, height) if (power >> h & 1) x = data[h][x];
     return x;
   }
-  int operator()(int power, int x) const { return apply(power, x); }
+  int operator()(ll power, int x) const { return apply(power, x); }
 
  private:
   int size, height;
