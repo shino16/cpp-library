@@ -1,5 +1,4 @@
 #pragma once
-#include "prelude.hpp"
 #include "algebra.hpp"
 
 template <class M>
@@ -31,7 +30,7 @@ class segment_tree {
     exec(i, [=](value_type& e) { e = m.op(e, v); });
   }
   void set(int i, value_type v) {
-    exec(i, [=](value_type& e) { e = move(v); });
+    exec(i, [=](value_type& e) { e = v; });
   }
   template <class F>
   void exec(int i, F f) {

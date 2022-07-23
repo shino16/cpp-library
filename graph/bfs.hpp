@@ -27,7 +27,7 @@ void bfs_ord(const G& graph, int s, F&& f) {
 template <class G>
 vector<int> dist(const G& graph, int s) {
   graph_trait<G> g(graph);
-  vector<int> res(g.size());
+  vector<int> res(g.size(), numeric_limits<int>::max());
   res[s] = 0;
   bfs(graph, s, [&](int v, int p) { res[v] = res[p] + 1; });
   return res;

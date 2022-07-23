@@ -1,12 +1,12 @@
 #pragma once
 #include "ds/fenwick.hpp"
 
-template <class M, class F>
+template <class M, class F = multiplies<>>
 class range_fenwick_tree {
  public:
   using value_type = typename M::type;
   range_fenwick_tree(vector<value_type> data, M m = M(), F mul = F())
-      : m(m), mul(mul), rect(move(data), m), tri(data.size(), m) {}
+      : m(m), mul(mul), tri(data.size(), m), rect(move(data), m) {}
   range_fenwick_tree(int n = 0, M m = M(), F mul = F())
       : m(m), mul(mul), rect(n, m), tri(n, m) {}
   int size() const { return rect.size(); }

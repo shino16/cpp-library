@@ -2,27 +2,28 @@
 #include "algebra.hpp"
 #include "bit/ctz.hpp"
 #include "bit/ilog2.hpp"
-#include "prelude.hpp"
 
-template <class M, class A, class Act>
+template <class M, class A, class F>
 class lazy_segment_tree {
  public:
   using value_type = typename M::type;
   using actor_type = typename A::type;
   template <class Iter>
-  lazy_segment_tree(Iter first, Iter last, M m = M(), A a = A(), Act f = Act())
-      : m(m), a(a), f(f), data((last - first) * 2), lazy(last - first, a.unit()) {
+  lazy_segment_tree(Iter first, Iter last, M m = M(), A a = A(), F f = F())
+      : m(m),
+        a(a),
+        f(f),
+        data((last - first) * 2),
+        lazy(last - first, a.unit()) {
     copy(first, last, data.begin() + (last - first));
     init();
   }
   lazy_segment_tree(const vector<value_type>& data, M m = M(), A a = A(),
-                    Act f = Act())
+                    F f = F())
       : lazy_segment_tree(all(data), m, a, f) {}
-  lazy_segment_tree(int n = 0, M m = M(), A a = A(), Act f = Act())
+  lazy_segment_tree(int n = 0, M m = M(), A a = A(), F f = F())
       : m(m), a(a), f(f), data(n * 2, m.unit()), lazy(n, a.unit()) {}
-  void init() {
-    for (int i = size(); --i;) data[i] = m.op(data[i << 1], data[i << 1 | 1]);
-  }
+
   int size() const { return data.size() / 2; }
   value_type prod(int l, int r) {
     flush(trunc(l + size()));
@@ -45,10 +46,14 @@ class lazy_segment_tree {
     build(trunc(l + size()));
     build(trunc(r + size()) - 1);
   }
-  void add(int i, value_type v) { exec(i, [=](value_type& e) { e = m.op(e, v); }); }
-  void set(int i, value_type v) { exec(i, [=](value_type& e) { e = move(v); }); }
-  template <class F>
-  void exec(int i, F f) {
+  void add(int i, value_type v) {
+    exec(i, [=](value_type& e) { e = m.op(e, v); });
+  }
+  void set(int i, value_type v) {
+    exec(i, [=](value_type& e) { e = v; });
+  }
+  template <class G>
+  void exec(int i, G f) {
     flush(trunc(i + size()));
     f(data[i + size()]);
     build(trunc(i + size()));
@@ -57,10 +62,12 @@ class lazy_segment_tree {
  private:
   M m;
   A a;
-  Act f;
+  F f;
   vector<value_type> data;
   vector<actor_type> lazy;
-  static int trunc(int a) { return a >> ctz(a); }
+  void init() {
+    for (int i = size(); --i;) data[i] = m.op(data[i << 1], data[i << 1 | 1]);
+  }
   void apply(int i, actor_type x) {
     data[i] = f(data[i], x);
     if (i < size()) lazy[i] = a.op(lazy[i], x);
@@ -73,6 +80,12 @@ class lazy_segment_tree {
     }
   }
   void upd(int i) { data[i] = m.op(data[i << 1], data[i << 1 | 1]); }
-  void flush(int i) { if (i) for (int s = ilog2(i); s > 0; s--) push(i >> s); }
-  void build(int i) { for (; i >>= 1;) upd(i); }
+  void flush(int i) {
+    if (i)
+      for (int s = ilog2(i); s > 0; s--) push(i >> s);
+  }
+  void build(int i) {
+    for (; i >>= 1;) upd(i);
+  }
+  static int trunc(int a) { return a >> ctz(a); }
 };
