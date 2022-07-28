@@ -5,7 +5,7 @@
 class doubling {
  public:
   template <class Iter>
-  doubling(Iter f, Iter l, ll max_power)
+  doubling(Iter f, Iter l, ll max_power = LONG_LONG_MAX)
       : size(l - f), height(ilog2(max_power) + 1), data(height) {
     data[0].assign(f, l);
     rep(h, height - 1) {
