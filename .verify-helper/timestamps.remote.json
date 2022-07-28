@@ -1,7 +1,9 @@
 {
 "test/2667.test.cpp": "2022-07-23 12:21:33 +0900",
 "test/2842.test.cpp": "2022-07-23 12:21:33 +0900",
-"test/ALDS1_14_B.test.cpp": "2022-07-23 12:21:33 +0900",
+"test/ALDS1_14_B.kmp.test.cpp": "2022-07-28 15:20:42 +0900",
+"test/ALDS1_14_B.rolling_hash.test.cpp": "2022-07-28 15:20:42 +0900",
+"test/ALDS1_14_B.z.test.cpp": "2022-07-28 15:20:42 +0900",
 "test/DSL_1_A.test.cpp": "2022-03-26 22:36:47 +0900",
 "test/DSL_2_A.test.cpp": "2022-07-23 12:21:33 +0900",
 "test/DSL_2_B.test.cpp": "2022-07-23 12:21:33 +0900",
@@ -14,5 +16,7 @@
 "test/GRL_4_A.test.cpp": "2022-03-30 21:02:06 +0900",
 "test/GRL_5_A.test.cpp": "2022-03-30 21:02:06 +0900",
 "test/GRL_5_B.test.cpp": "2022-04-01 14:40:23 +0900",
-"test/GRL_5_C.test.cpp": "2022-03-30 21:02:06 +0900"
+"test/GRL_5_C.test.cpp": "2022-03-30 21:02:06 +0900",
+"test/staticrmq.test.cpp": "2022-07-28 15:20:42 +0900",
+"test/suffixarray.test.cpp": "2022-07-28 15:20:42 +0900"
 }
