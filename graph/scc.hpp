@@ -29,7 +29,7 @@ class scc {
     for (auto v : post_ord)
       if (!visited[v]) dfs2(dfs2, v), n_cpnts++;
   }
-
+  // which component v belongs to
   int id(int v) const { return id_[v]; }
 
   vector<vector<int>> groups() const {
