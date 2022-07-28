@@ -19,6 +19,7 @@
 "test/GRL_5_A.test.cpp": "2022-07-28 16:37:17 +0900",
 "test/GRL_5_B.test.cpp": "2022-07-28 16:37:17 +0900",
 "test/GRL_5_C.test.cpp": "2022-07-28 16:37:17 +0900",
+"test/predecessor_problem.test.cpp": "2022-07-29 00:57:22 +0900",
 "test/staticrmq.test.cpp": "2022-07-28 15:20:42 +0900",
 "test/suffixarray.test.cpp": "2022-07-28 15:20:42 +0900"
 }
