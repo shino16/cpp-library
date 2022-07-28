@@ -30,11 +30,11 @@ class scc {
       if (!visited[v]) dfs2(dfs2, v), n_cpnts++;
   }
   // which component v belongs to
-  int id(int v) const { return id_[v]; }
+  int operator()(int v) const { return id_[v]; }
 
   vector<vector<int>> groups() const {
     vector<vector<int>> res(n_cpnts);
-    rep(v, g.size()) res[id(v)].push_back(v);
+    rep(v, g.size()) res[id_[v]].push_back(v);
     return res;
   }
 
@@ -47,11 +47,11 @@ class scc {
   vector<vector<vector<int>>> components(vector<int>& mapping) const {
     vector<int> sizes(n_cpnts, 0);
     mapping.resize(g.size());
-    rep(v, g.size()) mapping[v] = sizes[id(v)]++;
+    rep(v, g.size()) mapping[v] = sizes[id_[v]]++;
     vector<vector<vector<int>>> res(n_cpnts);
     rep(i, n_cpnts) res[i].resize(sizes[i]);
     rep(v, g.size()) g.adj(v, [&](int u) {
-      if (id(v) == id(u)) res[id(v)][mapping[v]].push_back(mapping[u]);
+      if (id_[v] == id_[u]) res[id_[v]][mapping[v]].push_back(mapping[u]);
     });
     return res;
   }
@@ -66,12 +66,12 @@ class scc {
       vector<int>& mapping) const {
     vector<int> sizes(n_cpnts, 0);
     mapping.resize(g.size());
-    rep(v, g.size()) mapping[v] = sizes[id(v)]++;
+    rep(v, g.size()) mapping[v] = sizes[id_[v]]++;
     vector<vector<vector<pair<int, W<G>>>>> res(n_cpnts);
     rep(i, n_cpnts) res[i].resize(sizes[i]);
     rep(v, g.size()) g.adj(v, [&](auto&& e) {
-      if (id(v) == id(e.to()))
-        res[id(v)][mapping[v]].emplace_back(mapping[e.to()], e.w());
+      if (id_[v] == id_[e.to()])
+        res[id_[v]][mapping[v]].emplace_back(mapping[e.to()], e.w());
     });
     return res;
   }
@@ -80,7 +80,7 @@ class scc {
   vector<vector<int>> contract() const {
     vector<vector<int>> res(n_cpnts);
     rep(v, g.size()) g.adj(v, [&](int u) {
-      if (id(v) != id(u)) res[id(v)].push_back(id(u));
+      if (id_[v] != id_[u]) res[id_[v]].push_back(id_[u]);
     });
     return res;
   }
@@ -89,7 +89,7 @@ class scc {
   vector<vector<pair<int, W<G>>>> contract() const {
     vector<vector<pair<int, W<G>>>> res(n_cpnts);
     rep(v, g.size()) g.adj(v, [&](auto&& e) {
-      if (id(v) != id(e.to())) res[v].emplace_back(e.to(), e.w());
+      if (id_[v] != id_[e.to()]) res[v].emplace_back(e.to(), e.w());
     });
     return res;
   }
