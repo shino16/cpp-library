@@ -99,7 +99,7 @@ class wavelet_matrix {
   }
   // -1 if no such elt
   T succ(int l, int r, T x) const {
-    int k = rangefreq(l, r, x + 1);
+    int k = rangefreq(l, r, x);
     return k == r - l ? -1 : rquantile(l, r, k);
   }
   // -1 if no such elt
