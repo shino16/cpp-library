@@ -8,8 +8,8 @@ class dual_segment_tree {
  public:
   using value_type = T;
   using actor_type = typename A::type;
-  dual_segment_tree(vector<value_type> data, A a = A(), F f = F())
-      : a(a), f(f), data(move(data)), lazy(data.size(), a.unit()) {}
+  dual_segment_tree(vector<value_type> v, A a = A(), F f = F())
+      : a(a), f(f), data(move(v)), lazy(data.size(), a.unit()) {}
   template <class Iter>
   dual_segment_tree(Iter first, Iter last, A a = A(), F f = F())
       : dual_segment_tree({first, last}, a, f) {}

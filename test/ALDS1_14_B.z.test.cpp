@@ -3,11 +3,10 @@
 
 #include "str/z.hpp"
 
-template <class It1, class It2>
-vector<int> occurences(It1 s_first, It1 s_last, It2 p_first, It2 p_last,
-                       typename iterator_traits<It1>::value_type sep = '$') {
+vector<int> occurences(char* s_first, char* s_last, char* p_first, char* p_last,
+                       char sep = '$') {
   int n = s_last - s_first, m = p_last - p_first;
-  vector<typename iterator_traits<It1>::value_type> s(n + m + 1);
+  vector<char> s(n + m + 1);
   copy(p_first, p_last, s.begin());
   s[m] = sep;
   copy(s_first, s_last, s.begin() + m + 1);

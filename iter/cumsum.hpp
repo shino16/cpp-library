@@ -1,6 +1,6 @@
 #pragma once
 #include "prelude.hpp"
-#include "type/alias.hpp"
+#include "types.hpp"
 
 template <class Iter, class F = plus<val_t<Iter>>>
 vector<val_t<Iter>> cumsuml(Iter first, Iter last,

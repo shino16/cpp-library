@@ -6,8 +6,8 @@ template <class M>
 class fenwick_tree_2d {
  public:
   using value_type = typename M::type;
-  fenwick_tree_2d(vector<vector<value_type>> data, M m = M())
-      : m(m), data(move(data)) {
+  fenwick_tree_2d(vector<vector<value_type>> v, M m = M())
+      : m(m), data(move(v)) {
     rep(i, data.size()) data[i].insert(data.cbegin(), m.unit());
     data.insert(data.begin(), vector<value_type>(data[0].size(), m.unit()));
     rep(i, data.size()) {

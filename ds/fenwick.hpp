@@ -6,7 +6,7 @@ template <class M>
 class fenwick_tree {
  public:
   using value_type = typename M::type;
-  fenwick_tree(vector<value_type> data, M m = M()) : m(m), data(move(data)) {
+  fenwick_tree(vector<value_type> v, M m = M()) : m(m), data(move(v)) {
     data.insert(data.cbegin(), m.unit());
     for (int i = 1; i < data.size(); i++) {
       if (i + lsb(i) < data.size())
