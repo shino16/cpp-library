@@ -5,6 +5,7 @@ template <class M>
 class sparse_table {
  public:
   using value_type = typename M::type;
+  sparse_table() = default;
   sparse_table(vector<value_type> v, M m = M()) : m(m), data({move(v)}) {
     int n = data[0].size();
     lg.resize(n + 1);
