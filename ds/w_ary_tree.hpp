@@ -11,7 +11,7 @@ class w_ary_tree {
     return ptr[x / V].insert(x % V);
   }
   bool erase(uint64_t x) {
-    if (~mask >> (x / V) & 1) return false;
+    if (!ptr) return false;
     bool ret = ptr[x / V].erase(x % V);
     if (ptr[x / V].mask == 0) {
       if constexpr (V > 64) ptr[x / V].ptr.reset();
