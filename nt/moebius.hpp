@@ -14,8 +14,11 @@ class moebius {
     }
   }
   int size() const { return mu.size(); }
+  int operator[](int i) const { return mu[i]; }
   int operator()(int i) const { return mu[i]; }
   bool is_prime(int i) const { return prime[i]; }
+  auto begin() const { return mu.cbegin(); }
+  auto end() const { return mu.cend(); }
  private:
   vector<int> mu;
   vector<bool> prime;
