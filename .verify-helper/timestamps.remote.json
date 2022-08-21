@@ -1,4 +1,5 @@
 {
+"test/2286.test.cpp": "2022-08-21 15:19:56 +0900",
 "test/2667.test.cpp": "2022-07-30 17:58:38 +0900",
 "test/2842.test.cpp": "2022-07-30 17:58:38 +0900",
 "test/ALDS1_14_B.kmp.test.cpp": "2022-07-28 15:20:42 +0900",
@@ -19,6 +20,7 @@
 "test/GRL_5_A.test.cpp": "2022-07-28 16:37:17 +0900",
 "test/GRL_5_B.test.cpp": "2022-07-28 16:37:17 +0900",
 "test/GRL_5_C.test.cpp": "2022-07-28 16:37:17 +0900",
+"test/NTL_1_D.test.cpp": "2022-08-21 15:19:56 +0900",
 "test/disjoint_sparse_table.test.cpp": "2022-07-30 17:58:38 +0900",
 "test/dp/d_and_c.test.cpp": "2022-07-31 03:03:53 +0900",
 "test/dp/knuth_merge.test.cpp": "2022-07-31 03:03:53 +0900",
