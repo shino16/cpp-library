@@ -11,3 +11,7 @@ using ll = long long;
 #define repr2(i, m, n) for (auto i = (n); i-- > (m);)
 #define repr(i, n) repr2(i, 0, n)
 #define all(x) begin(x), end(x)
+template <class T>
+auto ndvec(size_t n, T&& x) { return vector(n, forward<T>(x)); }
+template <class... Ts>
+auto ndvec(size_t n, Ts&&... xs) { return vector(n, forward<Ts>(xs)...); }
