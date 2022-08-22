@@ -15,6 +15,9 @@ jobs:
     - name: Install dependencies
       run: pip3 install -U online-judge-verify-helper
 
+    - name: Clone ACL
+      run: git clone -b production --single-branch https://github.com/atcoder/ac-library ..
+
     - name: Run tests
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
