@@ -2,19 +2,17 @@
 #include "prelude.hpp"
 #include "types.hpp"
 
-template <class Iter, class F = plus<val_t<Iter>>>
-vector<val_t<Iter>> cumsuml(Iter first, Iter last,
-                            val_t<Iter> e = val_t<Iter>(), const F& f = F()) {
-  vector<val_t<Iter>> res{e};
+template <class It, class T = val_t<It>, class F = plus<T>>
+vector<T> cumsuml(It first, It last, T e = T(), const F& f = F()) {
+  vector<T> res{e};
   res.reserve(last - first + 1);
   while (first != last) res.push_back(e = f(e, *first++));
   return res;
 }
 
-template <class Iter, class F = plus<val_t<Iter>>>
-vector<val_t<Iter>> cumsumr(Iter first, Iter last,
-                            val_t<Iter> e = val_t<Iter>(), const F& f = F()) {
-  vector<val_t<Iter>> res{e};
+template <class It, class T = val_t<It>, class F = plus<T>>
+vector<T> cumsumr(It first, It last, T e = T(), const F& f = F()) {
+  vector<T> res{e};
   res.reserve(last - first + 1);
   while (first != last) res.push_back(e = f(e, *--last));
   reverse(res.begin(), res.end());
