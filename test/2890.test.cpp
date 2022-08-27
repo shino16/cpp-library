@@ -27,7 +27,7 @@ int main() {
     tree.apply_on(0, k, [](auto &v) { v.second ^= true; });
     tree.apply_on(k + 1, n, [](auto &v) { v.second ^= true; });
   }
-  if (flip) tree.root()->second ^= true;
+  if (flip) tree.root().second ^= true;
   tree.propagate_all();
   decltype(tree)::const_iterator it = tree.begin();
   printf("%d", it++->first);

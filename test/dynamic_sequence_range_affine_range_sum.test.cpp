@@ -19,7 +19,6 @@ struct T {
 
 int main() {
   auto prop = [](auto &n, auto &v) {
-      // printf("  prop cnt = %d, a = %d, sum = %d, f = {%d, %d}\n", n.cnt, v.a.val(), v.sum.val(), v.f.a.val(), v.f.b.val());
     if (v.f.a != 1 || v.f.b != 0) {
       v.a = v.a * v.f.a + v.f.b;
       v.sum = v.sum * v.f.a + v.f.b * n.cnt;

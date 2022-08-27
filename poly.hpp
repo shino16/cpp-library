@@ -2,8 +2,29 @@
 #include "atcoder/convolution.hpp"
 #include "prelude.hpp"
 
+template <class T,
+          enable_if_t<is_base_of_v<atcoder::internal::modint_base, T>>* =
+              nullptr>
+class poly : vector<T> {
+  using vector<T>::vector;
+  poly(vector<T> v) : vector<T>(move(v)) {}
+
+  const vector<T>& as_vec() const { return (vector<T>&)*this; }
+  vector<T>& as_vec() { return (vector<T>&)*this; }
+  vector<T> into_vec() { return move(as_vec()); }
+  poly& conv(const poly& v) { return *this = conv(into_vec(), v.as_vec()); }
+  poly& diff() { return *this = diff(into_vec()); }
+  poly& integr() { return *this = integr(into_vec()); }
+  poly& inv(int deg) { return *this = inv(into_vec(), deg); }
+  poly& div(const poly& v, int deg) {
+    return *this = div(into_vec(), v.as_vec(), deg);
+  }
+  poly& log(int deg) { return *this = log(into_vec(), deg); }
+  poly& exp(int deg) { return *this = exp(into_vec(), deg); }
+};
+
 template <class T>
-vector<T> conv(vector<T> a, vector<T> b, size_t deg = -1) {
+vector<T> conv(vector<T> a, vector<T> b, int deg = -1) {
   if (~deg) a.resize(min(a.size(), deg)), b.resize(min(b.size(), deg));
   auto f = convolution(a, b);
   if (~deg) f.resize(deg);
@@ -26,7 +47,7 @@ vector<T> integr(vector<T> a) {
 }
 
 template <class T>
-vector<T> inv(vector<T> f, size_t deg) {
+vector<T> inv(vector<T> f, int deg) {
   assert(f[0] != 0);
   vector<T> g = {1 / f[0]};
   for (int m = 1; m < deg; m *= 2) {
@@ -41,18 +62,18 @@ vector<T> inv(vector<T> f, size_t deg) {
 }
 
 template <class T>
-vector<T> div(vector<T> a, vector<T> b, size_t deg) {
-  return conv(a, inv(b, deg));
+vector<T> div(vector<T> a, vector<T> b, int deg) {
+  return conv(a, inv(b, deg), deg);
 }
 
 template <class T>
-vector<T> log(vector<T> a, size_t deg) {
+vector<T> log(vector<T> a, int deg) {
   assert(a[0] == 1);
   return integr(div(diff(a), a2, deg - 1), deg - 1);
 }
 
 template <class T>
-vector<T> exp(vector<T> h, size_t deg) {
+vector<T> exp(vector<T> h, int deg) {
   assert(h[0] == 0);
   int n = 1 << atcoder::internal::ceil_pow2(deg);
   h.resize(n);

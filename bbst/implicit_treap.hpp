@@ -100,11 +100,11 @@ class implicit_treap {
     auto [lm, r] = split(j);
     auto [l, m] = lm.split(i);
     f(m.root());
-    *this = move(l.append(m).append(r));
+    *this = move(l.join(m).join(r));
   }
 
   int size() const { return count(head.l); }
-  implicit_treap &append(implicit_treap &rhs) {
+  implicit_treap &join(implicit_treap &rhs) {
     set_l(&head, merge(head.l, rhs.head.l));
     rhs.head.l = nullptr;
     return *this;
@@ -116,16 +116,12 @@ class implicit_treap {
     return pair(move(left), move(*this));
   }
   const_iterator insert(int k, T v) {
-    auto [l, r] = split(k);
     auto p = (link) new node(move(v));
-    implicit_treap m(p, upd, prop);
-    *this = move(l.append(m).append(r));
+    set_l(&head, insert(head.l, k, p));
     return const_iterator(p);
   }
   void erase(int i) {
-    auto [lm, r] = split(i + 1);
-    auto [l, m] = lm.split(i);
-    *this = move(l.append(r));
+    set_l(&head, erase(head.l, i));
   }
   int index_of(const_iterator it) {
     auto p = const_cast<link>(it.ptr);
@@ -189,6 +185,32 @@ class implicit_treap {
       auto [l, r] = split(p->l, k);
       set_l(p, r), update(*p);
       return pair(l, p);
+    }
+  }
+  link insert(link p, int k, link x) {
+    if (!p) {
+      assert(k == 0);
+      return x;
+    }
+    propagate(*p);
+    if (x->key > p->key) {
+      auto [l, r] = split(p, k);
+      return set_l(x, l), set_r(x, r), update(*x), x;
+    } else if (count(p->l) < k) {
+      return set_r(p, insert(p->r, k - count(p->l) - 1, x)), update(*p), p;
+    } else {
+      return set_l(p, insert(p->l, k, x)), update(*p), p;
+    }
+  }
+  link erase(link p, int k) {
+    assert(p);
+    propagate(*p);
+    if (count(p->l) < k) {
+      return set_r(p, erase(p->r, k - count(p->l) - 1)), update(*p), p;
+    } else if (count(p->l) > k) {
+      return set_l(p, erase(p->l, k)), update(*p), p;
+    } else {
+      return merge(p->l, p->r);
     }
   }
   link find(link p, int k) const {
