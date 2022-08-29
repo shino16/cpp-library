@@ -1,14 +1,14 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
 #include "atcoder/modint"
-#include "math/interpolate_val.hpp"
+#include "ps/interpolate.hpp"
 using mint = atcoder::modint1000000007;
 
 mint a[1000015];
 mint solve(int n, int k) {
   a[0] = 0;
   rep(i, k + 5) a[i + 1] = a[i] + mint(i + 1).pow(k);
-  mint ans = interpolate_consecutive(a, a + k + 5, mint(n));
+  mint ans = interpolate(a, a + k + 5, mint(n));
   return ans;
 }
 

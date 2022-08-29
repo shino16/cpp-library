@@ -6,7 +6,7 @@
 template <
     class It, class T,
     enable_if_t<is_base_of_v<atcoder::internal::modint_base, T>>* = nullptr>
-T interpolate_consecutive(It a, It a_last, T x, T s = 0) {
+T interpolate(It a, It a_last, T x, T s = 0) {
   x -= s;
   int n = a_last - a;
   T fact = 1;
