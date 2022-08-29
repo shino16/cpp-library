@@ -14,13 +14,13 @@ auto low_link(const G& graph) {
     done[v] = true, low[v] = in[v] = t++;
     int ch = 0;
     g.adj(v, [&](auto e) {
-      if (e.to() == p) return;
-      if (done[e.to()])
-        low[v] = min(low[v], in[e.to()]);
+      if (e.to == p) return;
+      if (done[e.to])
+        low[v] = min(low[v], in[e.to]);
       else {
-        f(f, e.to(), v), low[v] = min(low[v], low[e.to()]);
-        if (low[e.to()] > in[v]) es.emplace_back(v, e);
-        if (low[e.to()] >= in[v] && p != -1 && !pushed[v]) vs.push_back(v), pushed[v] = true;
+        f(f, e.to, v), low[v] = min(low[v], low[e.to]);
+        if (low[e.to] > in[v]) es.emplace_back(v, e);
+        if (low[e.to] >= in[v] && p != -1 && !pushed[v]) vs.push_back(v), pushed[v] = true;
         ch++;
       }
       if (p == -1 && ch > 1 && !pushed[v]) vs.push_back(v), pushed[v] = true;

@@ -6,8 +6,7 @@ void dfs(const G& graph, int s, Fin&& fin, Fout&& fout) {
   graph_trait<G> g(graph);
   auto dfs_fn = [&](auto&& f, int v, int p) {
     g.adj(v, [&](auto&& e) {
-      if (e.to() != p)
-        fin(e, v), f(f, e.to(), v), fout(e, v);
+      if (e.to != p) fin(e, v), f(f, e.to, v), fout(e, v);
     });
   };
   dfs_fn(dfs_fn, s, -1);

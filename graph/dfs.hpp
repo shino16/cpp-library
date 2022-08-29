@@ -8,8 +8,8 @@ void dfs(const G& graph, int s, Fin&& fin, Fout&& fout) {
   visited[s] = true;
   auto dfs_fn = [&](auto&& f, int v) {
     g.adj(v, [&](auto&& e) {
-      if (!visited[e.to()])
-        visited[e.to()] = true, fin(e, v), f(f, e.to()), fout(e, v);
+      if (!visited[e.to])
+        visited[e.to] = true, fin(e, v), f(f, e.to), fout(e, v);
     });
   };
   dfs_fn(dfs_fn, s);

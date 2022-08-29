@@ -12,8 +12,8 @@ vector<W<G>> dijkstra(const G& graph, Iter s_it, Iter s_last) {
     hp.pop();
     if (w != dist[v]) continue;
     g.adj(v, [&](auto&& e) {
-      if (dist[e.to()] > dist[v] + e.w())
-        dist[e.to()] = dist[v] + e.w(), hp.emplace(dist[e.to()], e.to());
+      if (dist[e.to] > dist[v] + e.w())
+        dist[e.to] = dist[v] + e.w(), hp.emplace(dist[e.to], e.to);
     });
   }
   return dist;

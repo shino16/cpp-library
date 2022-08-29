@@ -70,8 +70,8 @@ class scc {
     vector<vector<vector<pair<int, W<G>>>>> res(n_cpnts);
     rep(i, n_cpnts) res[i].resize(sizes[i]);
     rep(v, g.size()) g.adj(v, [&](auto&& e) {
-      if (id_[v] == id_[e.to()])
-        res[id_[v]][mapping[v]].emplace_back(mapping[e.to()], e.w());
+      if (id_[v] == id_[e.to])
+        res[id_[v]][mapping[v]].emplace_back(mapping[e.to], e.w());
     });
     return res;
   }
@@ -89,7 +89,7 @@ class scc {
   vector<vector<pair<int, W<G>>>> contract() const {
     vector<vector<pair<int, W<G>>>> res(n_cpnts);
     rep(v, g.size()) g.adj(v, [&](auto&& e) {
-      if (id_[v] != id_[e.to()]) res[v].emplace_back(e.to(), e.w());
+      if (id_[v] != id_[e.to]) res[v].emplace_back(e.to, e.w());
     });
     return res;
   }

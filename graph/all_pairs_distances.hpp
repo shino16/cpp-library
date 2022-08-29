@@ -10,8 +10,8 @@ class reduced_graph : public graph_trait<G> {
   template <class F>
   void adj(int v, F&& f) const {
     graph_trait<G>::adj(v, [&](auto&& e) {
-      W<G> reduced_cost = e.w() + potential[v] - potential[e.to()];
-      f(weighted_edge<W<G>>{e.to(), reduced_cost});
+      W<G> reduced_cost = e.w() + potential[v] - potential[e.to];
+      f(weighted_edge<W<G>>{e.to, reduced_cost});
     });
   }
 

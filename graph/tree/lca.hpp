@@ -13,8 +13,8 @@ class lca {
     data[0][r] = r;
     depth[r] = 0;
     dfs(g, r, [&](auto&& e, int p) {
-      data[0][e.to()] = p;
-      depth[e.to()] = depth[p] + 1;
+      data[0][e.to] = p;
+      depth[e.to] = depth[p] + 1;
     });
     rep(h, height - 1) rep(x, size) data[h + 1][x] = data[h][data[h][x]];
   }

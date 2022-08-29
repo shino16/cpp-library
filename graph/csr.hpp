@@ -24,6 +24,15 @@ class csr_graph {
     auto e = read_e(read);
     init(all(e));
   }
+  template <size_t Size = 1 << 26>
+  static csr_graph tree(int n, stdin_reader<Size>& read = in) {
+    return csr_graph(n, n - 1, read);
+  }
+  template <size_t Size = 1 << 26>
+  static csr_graph tree(stdin_reader<Size>& read = in) {
+    int n = read;
+    return csr_graph(n, n - 1, read);
+  }
 
   int size() const { return n; }
   range<typename vector<edge_type>::iterator> operator[](int v) const {

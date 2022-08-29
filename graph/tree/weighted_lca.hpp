@@ -19,13 +19,13 @@ class weighted_lca {
     data[0][r] = {r, m.unit()};
     depth[r] = 0;
     dfs(graph, r, [&](auto&& e, int p) {
-      data[0][e.to()] = {p, e.w()};
-      depth[e.to()] = depth[p] + 1;
+      data[0][e.to] = {p, e.w()};
+      depth[e.to] = depth[p] + 1;
     });
     rep(h, height - 1) rep(x, size) { data[h + 1][x] = extend(data[h][x], h); }
   }
 
-  int lca(int u, int v) const { return paths_to_lca(u, v).first.to(); }
+  int lca(int u, int v) const { return paths_to_lca(u, v).first.to; }
   // product of u-v-path
   weight_type path_prod(int u, int v) const {
     auto [eu, ev] = paths_to_lca(u, v);
@@ -51,7 +51,7 @@ class weighted_lca {
     return base;
   }
   edge_type extend(edge_type e, int h) const {
-    auto [to, w] = data[h][e.to()];
+    auto [to, w] = data[h][e.to];
     return {to, m.op(e.w(), w)};
   }
   pair<edge_type, edge_type> paths_to_lca(int u, int v) const {
@@ -61,9 +61,9 @@ class weighted_lca {
     else if (depth[u] > depth[v])
       eu = ascend(eu, depth[u] - depth[v]);
 
-    if (eu.to() == ev.to()) return {eu, ev};
+    if (eu.to == ev.to) return {eu, ev};
     repr(h, height) {
-      if (data[h][eu.to()].to() != data[h][ev.to()].to())
+      if (data[h][eu.to].to != data[h][ev.to].to)
         eu = extend(eu, h), ev = extend(ev, h);
     }
     return {extend(eu, 0), extend(ev, 0)};

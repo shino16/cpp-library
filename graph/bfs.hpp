@@ -12,8 +12,8 @@ void bfs(const G& graph, int s, F&& f) {
   while (nxt != togo.end()) {
     int v = *nxt++;
     g.adj(v, [&](auto&& e) {
-      if (!visited[e.to()])
-        visited[e.to()] = true, f(e, v), togo.push_back(e.to());
+      if (!visited[e.to])
+        visited[e.to] = true, f(e, v), togo.push_back(e.to);
     });
   }
 }

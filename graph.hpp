@@ -2,18 +2,16 @@
 #include "prelude.hpp"
 
 struct unit_edge {
-  int v;
-  int to() const { return v; }
-  operator int() const { return to(); }
+  int to;
+  operator int() const { return to; }
   int w() const { return 1; }
 };
 
 template <class Weight>
 struct weighted_edge {
-  int v;
+  int to;
   Weight weight;
-  int to() const { return v; }
-  operator int() const { return to(); }
+  operator int() const { return to; }
   Weight w() const { return weight; }
 };
 

@@ -9,7 +9,7 @@ vector<tuple<int, int, W<G>>> kruskal(const G& graph) {
   graph_trait<G> g(graph);
   vector<tuple<W<G>, int, int>> edges;
   rep(v, g.size()) g.adj(v, [&](auto&& e) {
-    if (e.to() > v) edges.emplace_back(e.w(), v, e.to());
+    if (e.to > v) edges.emplace_back(e.w(), v, e.to);
   });
   kruskal(g.size(), move(edges));
 }

@@ -12,9 +12,9 @@ pair<bool, vector<W<G>>> bellman_ford(G& graph, int s) {
   rep(t, g.size()) {
     bool updated = false;
     rep(v, g.size()) if (dist[v] != inf) g.adj(v, [&](auto&& e) {
-      if (dist[e.to()] > dist[v] + e.w())
+      if (dist[e.to] > dist[v] + e.w())
         updated = true,
-        dist[e.to()] = dist[v] + e.w();
+        dist[e.to] = dist[v] + e.w();
     });
     if (!updated) {
       success = true;
