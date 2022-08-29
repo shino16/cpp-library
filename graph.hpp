@@ -6,7 +6,6 @@ struct unit_edge {
   int to() const { return v; }
   operator int() const { return to(); }
   int w() const { return 1; }
-  int underlying() const { return v; }
 };
 
 template <class Weight>
@@ -16,7 +15,6 @@ struct weighted_edge {
   int to() const { return v; }
   operator int() const { return to(); }
   Weight w() const { return weight; }
-  weighted_edge<Weight> underlying() const { return *this; }
 };
 
 template <class Inner>
@@ -27,7 +25,7 @@ struct basic_graph {
   const Inner& inner;
   basic_graph(const Inner& g) : inner(g) {}
   template <class F>
-  void adj(int v, F&& f) const {
+  void adj(int v, F f) const {
     for (auto u : inner[v]) f(unit_edge{u});
   }
 };
@@ -40,13 +38,14 @@ struct basic_weighted_graph {
   const Inner& inner;
   basic_weighted_graph(const Inner& g) : inner(g) {}
   template <class F>
-  void adj(int v, F&& f) const {
+  void adj(int v, F f) const {
     for (auto [u, w] : inner[v]) f(weighted_edge<weight_type>{u, w});
   }
 };
 
 template <class T>
 struct graph_trait : public T {
+  using T::T;
   graph_trait(T t) : T(move(t)) {}
 };
 
