@@ -6,8 +6,9 @@
 #include "util/pool.hpp"
 #include "util/rand.hpp"
 
-template <class T, class Update = no_op, class Propagate = no_op,
-          class Alloc = pool<>>
+template <
+    class T, class Update = no_op, class Propagate = no_op,
+    class Alloc = pool<>>
 class implicit_treap {
   class node;
   class node_base;
@@ -25,7 +26,7 @@ class implicit_treap {
   class node : public node_base, public Alloc::template alloc<node> {
    public:
     T val;
-    node(T val) : val(move(val)) {}
+    node(T val) : val(move(val)) { }
   };
 
  private:
@@ -48,17 +49,17 @@ class implicit_treap {
 
    public:
     using base_type::base_type;
-    const_iterator(iterator it) : base_type(it.ptr) {}
+    const_iterator(iterator it) : base_type(it.ptr) { }
     const T &operator*() const { return base_type::ptr->val(); }
     const T *operator->() const { return &**this; }
   };
 
  public:
   implicit_treap(Update upd = Update(), Propagate prop = Propagate())
-      : upd(upd), prop(prop) {}
+      : upd(upd), prop(prop) { }
   template <class It>
-  implicit_treap(It a, It a_last, Update upd = Update(),
-                 Propagate prop = Propagate())
+  implicit_treap(
+      It a, It a_last, Update upd = Update(), Propagate prop = Propagate())
       : upd(upd), prop(prop) {
     vector<link> ps(bit_ceil(distance(a, a_last)) * 2);
     for (auto it = ps.begin(); a != a_last; it++, a++)
@@ -120,9 +121,7 @@ class implicit_treap {
     set_l(&head, insert(head.l, k, p));
     return const_iterator(p);
   }
-  void erase(int i) {
-    set_l(&head, erase(head.l, i));
-  }
+  void erase(int i) { set_l(&head, erase(head.l, i)); }
   int index_of(const_iterator it) {
     auto p = const_cast<link>(it.ptr);
     propagate(*p);
