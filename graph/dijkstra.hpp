@@ -2,11 +2,11 @@
 #include "graph.hpp"
 
 template <class G, class Iter>
-vector<W<G>> dijkstra(const G& graph, Iter s_it, Iter s_last) {
+vector<weight_t<G>> dijkstra(const G& graph, Iter s_it, Iter s_last) {
   graph_trait<G> g(graph);
-  vector<W<G>> dist(g.size(), numeric_limits<W<G>>::max());
-  priority_queue<pair<W<G>, int>, vector<pair<W<G>, int>>, greater<>> hp;
-  while (s_it != s_last) hp.emplace(W<G>(0), *s_it), dist[*s_it++] = W<G>(0);
+  vector<weight_t<G>> dist(g.size(), numeric_limits<weight_t<G>>::max());
+  priority_queue<pair<weight_t<G>, int>, vector<pair<weight_t<G>, int>>, greater<>> hp;
+  while (s_it != s_last) hp.emplace(weight_t<G>(0), *s_it), dist[*s_it++] = weight_t<G>(0);
   while (!hp.empty()) {
     auto [w, v] = hp.top();
     hp.pop();
@@ -20,6 +20,6 @@ vector<W<G>> dijkstra(const G& graph, Iter s_it, Iter s_last) {
 }
 
 template <class G>
-vector<W<G>> dijkstra(const G& graph, int s) {
+vector<weight_t<G>> dijkstra(const G& graph, int s) {
   return dijkstra(graph, &s, &s + 1);
 }

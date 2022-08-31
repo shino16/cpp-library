@@ -17,9 +17,7 @@ struct weighted_edge {
 
 template <class Inner>
 struct basic_graph {
-  using weight_type = int;
-  using edge_type = int;
-  constexpr static bool weighted = false;
+  using weight_type = void;
   const Inner& inner;
   basic_graph(const Inner& g) : inner(g) {}
   template <class F>
@@ -31,8 +29,6 @@ struct basic_graph {
 template <class Inner, class Weight>
 struct basic_weighted_graph {
   using weight_type = Weight;
-  using edge_type = weighted_edge<Weight>;
-  constexpr static bool weighted = true;
   const Inner& inner;
   basic_weighted_graph(const Inner& g) : inner(g) {}
   template <class F>
@@ -41,14 +37,27 @@ struct basic_weighted_graph {
   }
 };
 
-template <class T>
-struct graph_trait : public T {
-  using T::T;
-  graph_trait(T t) : T(move(t)) {}
+template <class Inner>
+struct graph_trait {
+  using weight_type = typename Inner::weight_type;
+  const Inner& g;
+  graph_trait(const Inner& g) : g(g) {}
+  int size() const { return g.size(); }
+  template <class F>
+  void adj(int v, F f) const { g.adj(v, f); }
 };
 
 template <class T>
-using W = typename graph_trait<T>::weight_type;
+constexpr bool is_weighted_v =
+    !is_same_v<typename graph_trait<T>::weight_type, void>;
+
+template <class T>
+using weight_t =
+    conditional_t<is_weighted_v<T>, typename graph_trait<T>::weight_type, int>;
+
+template <class T>
+using edge_t =
+    conditional_t<is_weighted_v<T>, weighted_edge<weight_t<T>>, unit_edge>;
 
 template <size_t N>
 struct graph_trait<vector<int>[N]> : basic_graph<vector<int>[N]> {
@@ -65,10 +74,10 @@ struct graph_trait<vector<vector<int>>> : basic_graph<vector<vector<int>>> {
 template <size_t N, class Weight>
 struct graph_trait<vector<pair<int, Weight>>[N]>
     : basic_weighted_graph<vector<pair<int, Weight>>[N], Weight> {
-  using basic_weighted_graph<vector<pair<int, Weight>>[N],
-                             Weight>::basic_weighted_graph;
-  int size() const { return N; }
-};
+      using basic_weighted_graph<vector<pair<int, Weight>>[N],
+                                 Weight>::basic_weighted_graph;
+      int size() const { return N; }
+    };
 
 template <class Weight>
 struct graph_trait<vector<vector<pair<int, Weight>>>>

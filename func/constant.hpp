@@ -3,5 +3,6 @@
 
 template <class T, T val>
 struct constant {
-  constexpr T operator()() const { return val; }
+  template <class... Ts>
+  constexpr T operator()(Ts&&...) const { return val; }
 };

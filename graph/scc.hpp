@@ -38,12 +38,12 @@ class scc {
     return res;
   }
 
-  template <class G1 = G, enable_if_t<!graph_trait<G1>::weighted>* = nullptr>
+  template <class G1 = G, enable_if_t<!is_weighted_v<G1>>* = nullptr>
   vector<vector<vector<int>>> components() const {
     vector<int> v;
     return components(v);
   }
-  template <class G1 = G, enable_if_t<!graph_trait<G1>::weighted>* = nullptr>
+  template <class G1 = G, enable_if_t<!is_weighted_v<G1>>* = nullptr>
   vector<vector<vector<int>>> components(vector<int>& mapping) const {
     vector<int> sizes(n_cpnts, 0);
     mapping.resize(g.size());
@@ -56,18 +56,18 @@ class scc {
     return res;
   }
 
-  template <class G1 = G, enable_if_t<graph_trait<G1>::weighted>* = nullptr>
-  vector<vector<vector<pair<int, W<G>>>>> components() const {
+  template <class G1 = G, enable_if_t<is_weighted_v<G1>>* = nullptr>
+  vector<vector<vector<pair<int, weight_t<G>>>>> components() const {
     vector<int> v;
     return components(v);
   }
-  template <class G1 = G, enable_if_t<graph_trait<G1>::weighted>* = nullptr>
-  vector<vector<vector<pair<int, W<G>>>>> components(
+  template <class G1 = G, enable_if_t<is_weighted_v<G1>>* = nullptr>
+  vector<vector<vector<pair<int, weight_t<G>>>>> components(
       vector<int>& mapping) const {
     vector<int> sizes(n_cpnts, 0);
     mapping.resize(g.size());
     rep(v, g.size()) mapping[v] = sizes[id_[v]]++;
-    vector<vector<vector<pair<int, W<G>>>>> res(n_cpnts);
+    vector<vector<vector<pair<int, weight_t<G>>>>> res(n_cpnts);
     rep(i, n_cpnts) res[i].resize(sizes[i]);
     rep(v, g.size()) g.adj(v, [&](auto&& e) {
       if (id_[v] == id_[e.to])
@@ -76,7 +76,7 @@ class scc {
     return res;
   }
 
-  template <class G1 = G, enable_if_t<!graph_trait<G1>::weighted>* = nullptr>
+  template <class G1 = G, enable_if_t<!is_weighted_v<G1>>* = nullptr>
   vector<vector<int>> contract() const {
     vector<vector<int>> res(n_cpnts);
     rep(v, g.size()) g.adj(v, [&](int u) {
@@ -85,9 +85,9 @@ class scc {
     return res;
   }
 
-  template <class G1 = G, enable_if_t<graph_trait<G1>::weighted>* = nullptr>
-  vector<vector<pair<int, W<G>>>> contract() const {
-    vector<vector<pair<int, W<G>>>> res(n_cpnts);
+  template <class G1 = G, enable_if_t<is_weighted_v<G1>>* = nullptr>
+  vector<vector<pair<int, weight_t<G>>>> contract() const {
+    vector<vector<pair<int, weight_t<G>>>> res(n_cpnts);
     rep(v, g.size()) g.adj(v, [&](auto&& e) {
       if (id_[v] != id_[e.to]) res[v].emplace_back(e.to, e.w());
     });
