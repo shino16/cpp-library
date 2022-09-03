@@ -3,10 +3,10 @@
 
 // (fail, dist)
 template <class G>
-pair<bool, vector<W<G>>> bellman_ford(G& graph, int s) {
-  const W<G> inf = numeric_limits<W<G>>::max();
+pair<bool, vector<weight_t<G>>> bellman_ford(G& graph, int s) {
+  const weight_t<G> inf = numeric_limits<weight_t<G>>::max();
   graph_trait<G> g(graph);
-  vector<W<G>> dist(g.size(), inf);
+  vector<weight_t<G>> dist(g.size(), inf);
   dist[s] = 0;
   bool success = false;
   rep(t, g.size()) {
@@ -21,6 +21,6 @@ pair<bool, vector<W<G>>> bellman_ford(G& graph, int s) {
       break;
     }
   }
-  for (auto& d : dist) if (d >= inf / 2) d = numeric_limits<W<G>>::max();
+  for (auto& d : dist) if (d >= inf / 2) d = numeric_limits<weight_t<G>>::max();
   return {!success, move(dist)};
 }

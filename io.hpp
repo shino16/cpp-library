@@ -14,15 +14,23 @@ class stdin_reader {
     if constexpr (is_signed_v<T>) x = neg ? -x : x;
   }
   template <class T> void_t<decltype(&T::val)> read(T& x) { x = T((unsigned)(*this)); }
-  void read(char*& q) { skip(), q = p; }
-  void read(string& s) { skip(), s = string(p); }
+  void read(char* q) {
+    skip(); char* p0 = p; while (*p > ' ') p++;
+    copy(p0, p, q);
+  }
+  template <size_t N> void read(char (&s)[N]) { read(s); }
+  void read(string& s) {
+    skip(); char* p0 = p; while (*p > ' ') p++;
+    s.assign(p0, p);
+  }
   template <class T, class U> void read(pair<T, U>& x) { read(x.first), read(x.second); }
   template <class... Ts>
   void read(tuple<Ts...>& x) { read_tuple(x, make_index_sequence<sizeof...(Ts)>{}); }
+  template <class T, size_t N> void read(T (&a)[N]) { for (auto& e : a) read(e); }
 
   template <class T> operator T() { T x; return read(x), x; }
   template <class... Ts> void operator()(Ts&... xs) { (read(xs), ...); }
-  int operator--() { return read<int>(); }
+  int operator--() { return (int)*this - 1; }
   template <class T> void vec(vector<T>& v, int n) { v.resize(n); for (auto& e : v) read(e); }
   template <class T> vector<T> vec(int n) { vector<T> v(n); return vec(v, n), v; }
 
@@ -67,8 +75,11 @@ class stdout_writer {
 
   template <class... Ts> void operator()(const Ts&... xs) { writeln(xs...); }
   template <class It> void iter(It first, It last) {
-    while (first != last) write(*first++), write_char(' ');
-    p[-1] = '\n';
+    if (first == last) write_char('\n');
+    else {
+      while (first != last) write(*first++), write_char(' ');
+      p[-1] = '\n';
+    }
   }
 
 #define INSTANT(s) \

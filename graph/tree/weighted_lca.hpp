@@ -9,7 +9,7 @@ class weighted_lca {
   using weight_type = typename M::type;
   using edge_type = weighted_edge<weight_type>;
 
-  template <class G, enable_if<is_same_v<weight_type, W<G>>>* = nullptr>
+  template <class G, enable_if<is_same_v<weight_type, weight_t<G>>>* = nullptr>
   weighted_lca(const G& graph, int r = 0, M m = M())
       : size(graph_trait<G>(graph).size()),
         height(ilog2(size) + 1),

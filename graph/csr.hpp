@@ -6,9 +6,7 @@
 template <class Weight = void, bool Directed = false, bool OneBased = true>
 class csr_graph {
  public:
-  constexpr static bool weighted = !is_same_v<Weight, void>;
-  using weight_type = conditional_t<!weighted, Weight, int>;
-  using edge_type = conditional_t<weighted, weighted_edge<Weight>, unit_edge>;
+  using weight_type = Weight;
 
   template <class It>
   csr_graph(int n, It e, It e_last) : n(n), m(distance(e, e_last)) {
@@ -35,7 +33,7 @@ class csr_graph {
   }
 
   int size() const { return n; }
-  range<typename vector<edge_type>::iterator> operator[](int v) const {
+  range<typename vector<edge_t<csr_graph>>::iterator> operator[](int v) const {
     return {ls[v], rs[v]};
   }
   template <class F>
@@ -45,11 +43,12 @@ class csr_graph {
 
  private:
   int n, m;
-  vector<edge_type> es;
-  vector<typename vector<edge_type>::iterator> ls, rs;
+  vector<edge_t<csr_graph>> es;
+  vector<typename vector<edge_t<csr_graph>>::iterator> ls, rs;
   template <size_t Size = 1 << 26>
   auto read_e(stdin_reader<Size>& read) {
-    using E = conditional_t<weighted, tuple<int, int, Weight>, pair<int, int>>;
+    using E = conditional_t<is_weighted_v<csr_graph>, tuple<int, int, Weight>,
+                            pair<int, int>>;
     vector<E> res(m);
     for (auto& e : res) {
       read(e);
@@ -72,15 +71,15 @@ class csr_graph {
     rep(v, n) ls[v] = rs[v] = es.begin() + sz[v];
     for (auto it = e; it != e_last; it++) {
       int from = get<0>(*it), to = get<1>(*it);
-      if constexpr (weighted)
-        *--ls[from] = edge_type{to, get<2>(*it)};
+      if constexpr (is_weighted_v<csr_graph>)
+        *--ls[from] = edge_t<csr_graph>{to, get<2>(*it)};
       else
-        *--ls[from] = edge_type{to};
+        *--ls[from] = edge_t<csr_graph>{to};
       if (!Directed) {
-        if constexpr (weighted)
-          *--ls[to] = edge_type{from, get<2>(*it)};
+        if constexpr (is_weighted_v<csr_graph>)
+          *--ls[to] = edge_t<csr_graph>{from, get<2>(*it)};
         else
-          *--ls[to] = edge_type{from};
+          *--ls[to] = edge_t<csr_graph>{from};
       }
     }
   }
