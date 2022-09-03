@@ -4,7 +4,7 @@
 template <size_t BUF_SIZE = 1 << 26>
 class stdin_reader {
  public:
-  stdin_reader(FILE *f = stdin) { buf[fread_unlocked(buf, 1, sizeof(buf), f)] = 0; }
+  stdin_reader() { buf[fread_unlocked(buf, 1, sizeof(buf), stdin)] = 0; }
 
   template <class T>
   enable_if_t<is_integral_v<T>> read(T& x) {
@@ -75,8 +75,11 @@ class stdout_writer {
 
   template <class... Ts> void operator()(const Ts&... xs) { writeln(xs...); }
   template <class It> void iter(It first, It last) {
-    while (first != last) write(*first++), write_char(' ');
-    p[-1] = '\n';
+    if (first == last) write_char('\n');
+    else {
+      while (first != last) write(*first++), write_char(' ');
+      p[-1] = '\n';
+    }
   }
 
 #define INSTANT(s) \

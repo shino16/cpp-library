@@ -21,7 +21,7 @@ vector<T> exp(const vector<T>& p, int deg = -1) {
     rep(i, m) h[i] *= -gfft[i];
     ifft(h);
     rep2(i, (m + 1) / 2, m) g.push_back(h[i] * imm);
-    gfft.assign(all(g)), gfft.resize(m * 2), fft(gfft);
+    gfft.assign(all(g)), fft(gfft, m * 2);
     h.assign(deriv.begin(), deriv.begin() + m - 1), fft(h, m);
     rep(i, m) q[i] = ffft[i] * h[i];
     ifft(q);
