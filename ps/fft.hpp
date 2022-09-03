@@ -327,7 +327,8 @@ void fft(It a, It a_last) {
 }
 
 template <class T>
-void fft(vector<T>& a) {
+void fft(vector<T>& a, int n = -1) {
+  if (n != -1) a.resize(n);
   fft(all(a));
 }
 

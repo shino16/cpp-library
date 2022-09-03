@@ -4,7 +4,7 @@
 template <size_t BUF_SIZE = 1 << 26>
 class stdin_reader {
  public:
-  stdin_reader() { buf[fread_unlocked(buf, 1, sizeof(buf), stdin)] = 0; }
+  stdin_reader(FILE *f = stdin) { buf[fread_unlocked(buf, 1, sizeof(buf), f)] = 0; }
 
   template <class T>
   enable_if_t<is_integral_v<T>> read(T& x) {
