@@ -3,7 +3,7 @@
 #include "ds/w_ary_tree.hpp"
 
 int main() {
-  w_ary_tree<10000001> S;
+  w_ary_tree<unsigned, 10000001> S;
 
   int n, q; scanf("%d%d", &n, &q);
   static char s[10000001]; scanf("%s", s);
@@ -13,7 +13,7 @@ int main() {
     if (c == 0) S.insert(k);
     else if (c == 1) S.erase(k);
     else if (c == 2) printf("%d\n", S.contains(k));
-    else if (c == 3) printf("%ld\n", S.succ(k));
-    else printf("%ld\n", S.pred(k+1));
+    else if (c == 3) printf("%d\n", S.succ(k));
+    else printf("%d\n", S.pred(k+1));
   }
 }

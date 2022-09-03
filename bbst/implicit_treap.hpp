@@ -12,16 +12,16 @@ template <
 class implicit_treap {
   class node;
   class node_base;
-  using link = node_base *;
-  using clink = const node_base *;
+  using link = node_base*;
+  using clink = const node_base*;
 
   class node_base {
    public:
     link l = nullptr, r = nullptr, par = nullptr;
     int cnt = 1;
     uint32_t key = rand32();
-    T &val() { return ((node *)this)->val; }
-    const T &val() const { return ((const node *)this)->val; }
+    T& val() { return ((node*)this)->val; }
+    const T& val() const { return ((const node*)this)->val; }
   };
   class node : public node_base, public Alloc::template alloc<node> {
    public:
@@ -38,8 +38,8 @@ class implicit_treap {
 
    public:
     using base_type::base_type;
-    T &operator*() const { return base_type::ptr->val(); }
-    T *operator->() const { return &**this; }
+    T& operator*() const { return base_type::ptr->val(); }
+    T* operator->() const { return &**this; }
   };
 
   class const_iterator
@@ -50,8 +50,8 @@ class implicit_treap {
    public:
     using base_type::base_type;
     const_iterator(iterator it) : base_type(it.ptr) { }
-    const T &operator*() const { return base_type::ptr->val(); }
-    const T *operator->() const { return &**this; }
+    const T& operator*() const { return base_type::ptr->val(); }
+    const T* operator->() const { return &**this; }
   };
 
  public:
@@ -69,18 +69,18 @@ class implicit_treap {
     set_l(&head, ps.back());
   }
 
-  implicit_treap(const implicit_treap &rhs) : upd(rhs.upd), prop(rhs.prop) {
+  implicit_treap(const implicit_treap& rhs) : upd(rhs.upd), prop(rhs.prop) {
     set_l(&head, deep_copy(rhs.head.l));
   }
-  implicit_treap(implicit_treap &&rhs) : upd(rhs.upd), prop(rhs.prop) {
+  implicit_treap(implicit_treap&& rhs) : upd(rhs.upd), prop(rhs.prop) {
     set_l(&head, rhs.head.l);
     rhs.head.l = nullptr;
   }
-  implicit_treap &operator=(const implicit_treap &rhs) {
+  implicit_treap& operator=(const implicit_treap& rhs) {
     set_l(&head, deep_copy(rhs.head.l));
     return *this;
   }
-  implicit_treap &operator=(implicit_treap &&rhs) {
+  implicit_treap& operator=(implicit_treap&& rhs) {
     set_l(&head, rhs.head.l), rhs.head.l = nullptr;
     return *this;
   }
@@ -91,8 +91,8 @@ class implicit_treap {
     return const_iterator(ptr);
   }
   const_iterator end() const { return const_iterator(&head); }
-  const T &root() const { return head.l->val(); }
-  T &root() { return head.l->val(); }
+  const T& root() const { return head.l->val(); }
+  T& root() { return head.l->val(); }
   const_iterator find(int k) const { return const_iterator(find(head.l, k)); }
 
   template <class F>
@@ -105,7 +105,7 @@ class implicit_treap {
   }
 
   int size() const { return count(head.l); }
-  implicit_treap &join(implicit_treap &rhs) {
+  implicit_treap& join(implicit_treap& rhs) {
     set_l(&head, merge(head.l, rhs.head.l));
     rhs.head.l = nullptr;
     return *this;
@@ -145,13 +145,13 @@ class implicit_treap {
   Update upd;
   Propagate prop;
   int count(link p) const { return p ? p->cnt : 0; }
-  void propagate(node_base &n) { prop(n, n.val()); }
-  void update(node_base &n) { update((node &)n); }
-  void update(node &n) {
+  void propagate(node_base& n) { prop(n, n.val()); }
+  void update(node_base& n) { update((node&)n); }
+  void update(node& n) {
     n.cnt = 1 + count(n.l) + count(n.r);
     if (n.l) propagate(*n.l);
     if (n.r) propagate(*n.r);
-    upd((node_base &)n, n.val);
+    upd((node_base&)n, n.val);
   }
   void set_l(link par, link p) {
     par->l = p;
@@ -219,7 +219,7 @@ class implicit_treap {
   }
   link deep_copy(link p) {
     if (!p) return nullptr;
-    link q = (link) new node(*(node *)p);
+    link q = (link) new node(*(node*)p);
     set_l(q, deep_copy(p->l));
     set_r(q, deep_copy(p->r));
     return q;

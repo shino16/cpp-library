@@ -2,15 +2,16 @@
 #include "bit/clz.hpp"
 #include "bit/ctz.hpp"
 
-template <uint64_t U, class = void>
+template <class T0, make_unsigned_t<T0> U, class = void>
 class w_ary_tree {
+  using T = make_unsigned_t<T0>;
  public:
-  bool insert(uint64_t x) {
-    if (!ptr) ptr = make_unique<w_ary_tree<V>[]>((U - 1) / V + 1);
+  bool insert(T x) {
+    if (!ptr) ptr = make_unique<w_ary_tree<T0, V>[]>((U - 1) / V + 1);
     mask |= uint64_t(1) << (x / V);
     return ptr[x / V].insert(x % V);
   }
-  bool erase(uint64_t x) {
+  bool erase(T x) {
     if (!ptr) return false;
     bool ret = ptr[x / V].erase(x % V);
     if (ptr[x / V].mask == 0) {
@@ -19,19 +20,19 @@ class w_ary_tree {
     }
     return ret;
   }
-  bool contains(uint64_t x) const { return ptr && ptr[x / V].contains(x % V); }
-  uint64_t min() const {
-    uint64_t i = ctz(mask);
+  bool contains(T x) const { return ptr && ptr[x / V].contains(x % V); }
+  T min() const {
+    T i = ctz(mask);
     return (i * V) | ptr[i].min();
   }
-  uint64_t max() const {
-    uint64_t i = 63 - clz(mask);
+  T max() const {
+    T i = 63 - clz(mask);
     return (i * V) | ptr[i].max();
   }
   // max s s.t. s < x
-  uint64_t pred(uint64_t x) const {
+  T pred(T x) const {
     if (!ptr) return -1;
-    uint64_t u = ptr[x / V].pred(x % V);
+    T u = ptr[x / V].pred(x % V);
     if (u != -1) return (x & -V) | u;
     uint64_t mask2 = mask & ~(~uint64_t(0) << (x / V));
     if (mask2 == 0) return -1;
@@ -39,9 +40,9 @@ class w_ary_tree {
     return (i * V) | ptr[i].max();
   }
   // min s s.t. s >= x
-  uint64_t succ(uint64_t x) const {
+  T succ(T x) const {
     if (!ptr) return -1;
-    uint64_t u = ptr[x / V].succ(x % V);
+    T u = ptr[x / V].succ(x % V);
     if (u != -1) return (x & -V) | u;
     uint64_t mask2 = mask & ~(~uint64_t(0) >> (63 - x / V));
     if (mask2 == 0) return -1;
@@ -50,46 +51,47 @@ class w_ary_tree {
   }
 
  private:
-  static constexpr uint64_t calc_v(uint64_t u) {
-    uint64_t res = 1;
+  static constexpr T calc_v(T u) {
+    T res = 1;
     while (u > 64) u /= 64, res *= 64;
     return res;
   }
-  static constexpr uint64_t V = calc_v(U);
+  static constexpr T V = calc_v(U);
   uint64_t mask = 0;
-  unique_ptr<w_ary_tree<V>[]> ptr;
-  template <uint64_t, class>
+  unique_ptr<w_ary_tree<T0, V>[]> ptr;
+  template <class T2, make_unsigned_t<T2>, class>
   friend class w_ary_tree;
 };
 
-template <uint64_t U>
-class w_ary_tree<U, enable_if_t<U <= 64>> {
+template <class T0, make_unsigned_t<T0> U>
+class w_ary_tree<T0, U, enable_if_t<U <= 64>> {
+  using T = make_unsigned_t<T0>;
  public:
-  bool insert(uint64_t x) {
+  bool insert(T x) {
     bool ret = ~mask >> x & 1;
     mask |= uint64_t(1) << x;
     return ret;
   }
-  bool erase(uint64_t x) {
+  bool erase(T x) {
     bool ret = mask >> x & 1;
     mask &= ~(uint64_t(1) << x);
     return ret;
   }
-  bool contains(uint64_t x) const { return mask >> x & 1; }
-  uint64_t min() const { return ctz(mask); }
-  uint64_t max() const { return 63 - clz(mask); }
+  bool contains(T x) const { return mask >> x & 1; }
+  T min() const { return ctz(mask); }
+  T max() const { return 63 - clz(mask); }
   // max s s.t. s < x
-  uint64_t pred(uint64_t x) const {
+  T pred(T x) const {
     uint64_t mask2 = mask & ~(~uint64_t(0) << x);
     return mask2 == 0 ? -1 : 63 - clz(mask2);
   }
-  uint64_t succ(uint64_t x) const {
+  T succ(T x) const {
     uint64_t mask2 = mask & (~uint64_t(0) << x);
     return mask2 == 0 ? -1 : ctz(mask2);
   }
 
  private:
   uint64_t mask = 0;
-  template <uint64_t, class>
+  template <class T2, make_unsigned_t<T2>, class>
   friend class w_ary_tree;
 };
