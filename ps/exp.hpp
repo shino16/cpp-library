@@ -1,9 +1,10 @@
 #pragma once
 #include "ps/fft.hpp"
-#include "math/inv.hpp"
+#include "mod/inv.hpp"
 
 template <class T>
 vector<T> exp(const vector<T>& p, int deg = -1) {
+  if (p.empty()) return vector<T>{T(1)};
   assert(p[0] == 0);
   if (deg == -1) deg = p.size();
   int z = 1 << atcoder::internal::ceil_pow2(deg);
@@ -34,7 +35,7 @@ vector<T> exp(const vector<T>& p, int deg = -1) {
     rep(i, m * 2) q[i] = gfft[i] * h[i];
     ifft(q);
     h.assign(p.begin() + m, p.begin() + min((int)p.size(), m * 2));
-    repr(i, m) h[i] -= q[i] * im2 * inverse<T>(i + m);
+    repr(i, m) h[i] -= q[i] * im2 * inverse(i + m);
     fft(h, m * 2);
     rep(i, m * 2) q[i] = ffft[i] * h[i];
     ifft(q);

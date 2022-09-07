@@ -3,7 +3,8 @@
 #include "types.hpp"
 
 #include "atcoder/internal_bit"
-#include "atcoder/modint"
+#include "mod/modint.hpp"
+#include "bit/ctz.hpp"
 
 #ifndef ATCODER_CONVOLUTION_HPP
 #define ATCODER_CONVOLUTION_HPP
@@ -12,20 +13,21 @@ namespace atcoder {
 
 namespace internal {
 
-template <class mint, int g = internal::primitive_root<mint::mod()>,
-          internal::is_static_modint_t<mint>* = nullptr>
+template <
+    class mint, int g = internal::primitive_root<mint::mod()>,
+    internal::is_static_modint_t<mint>* = nullptr>
 struct fft_info {
   static constexpr int rank2 = bsf_constexpr(mint::mod() - 1);
-  std::array<mint, rank2 + 1> root;   // root[i]^(2^i) == 1
-  std::array<mint, rank2 + 1> iroot;  // root[i] * iroot[i] == 1
+  mint root[rank2 + 1];   // root[i]^(2^i) == 1
+  mint iroot[rank2 + 1];  // root[i] * iroot[i] == 1
 
-  std::array<mint, std::max(0, rank2 - 2 + 1)> rate2;
-  std::array<mint, std::max(0, rank2 - 2 + 1)> irate2;
+  mint rate2[std::max(0, rank2 - 2 + 1)];
+  mint irate2[std::max(0, rank2 - 2 + 1)];
 
-  std::array<mint, std::max(0, rank2 - 3 + 1)> rate3;
-  std::array<mint, std::max(0, rank2 - 3 + 1)> irate3;
+  mint rate3[std::max(0, rank2 - 3 + 1)];
+  mint irate3[std::max(0, rank2 - 3 + 1)];
 
-  fft_info() {
+  constexpr fft_info() : root(), iroot(), rate2(), irate2(), rate3(), irate3() {
     root[rank2] = mint(g).pow((mint::mod() - 1) >> rank2);
     iroot[rank2] = root[rank2].inv();
     for (int i = rank2 - 1; i >= 0; i--) {
@@ -60,7 +62,7 @@ void butterfly(It a, It a_last) {
   int n = a_last - a;
   int h = internal::ceil_pow2(n);
 
-  static const fft_info<mint> info;
+  static constexpr fft_info<mint> info;
 
   int len = 0;  // a[i, i+(n>>len), i+2*(n>>len), ..] is transformed
   while (len < h) {
@@ -117,7 +119,7 @@ void butterfly_inv(It a, It a_last) {
   int n = a_last - a;
   int h = internal::ceil_pow2(n);
 
-  static const fft_info<mint> info;
+  static constexpr fft_info<mint> info;
 
   int len = h;  // a[i, i+(n>>len), i+2*(n>>len), ..] is transformed
   while (len) {
@@ -179,21 +181,17 @@ void butterfly_inv(vector<mint>& a) {
 }
 
 template <class mint, internal::is_static_modint_t<mint>* = nullptr>
-std::vector<mint> convolution_naive(const std::vector<mint>& a,
-                                    const std::vector<mint>& b) {
+std::vector<mint> convolution_naive(
+    const std::vector<mint>& a, const std::vector<mint>& b) {
   int n = int(a.size()), m = int(b.size());
   std::vector<mint> ans(n + m - 1);
   if (n < m) {
     for (int j = 0; j < m; j++) {
-      for (int i = 0; i < n; i++) {
-        ans[i + j] += a[i] * b[j];
-      }
+      for (int i = 0; i < n; i++) { ans[i + j] += a[i] * b[j]; }
     }
   } else {
     for (int i = 0; i < n; i++) {
-      for (int j = 0; j < m; j++) {
-        ans[i + j] += a[i] * b[j];
-      }
+      for (int j = 0; j < m; j++) { ans[i + j] += a[i] * b[j]; }
     }
   }
   return ans;
@@ -207,9 +205,7 @@ std::vector<mint> convolution_fft(std::vector<mint> a, std::vector<mint> b) {
   internal::butterfly(a);
   b.resize(z);
   internal::butterfly(b);
-  for (int i = 0; i < z; i++) {
-    a[i] *= b[i];
-  }
+  for (int i = 0; i < z; i++) { a[i] *= b[i]; }
   internal::butterfly_inv(a);
   a.resize(n + m - 1);
   mint iz = mint(z).inv();
@@ -228,38 +224,33 @@ std::vector<mint> convolution(std::vector<mint>&& a, std::vector<mint>&& b) {
 }
 
 template <class mint, internal::is_static_modint_t<mint>* = nullptr>
-std::vector<mint> convolution(const std::vector<mint>& a,
-                              const std::vector<mint>& b) {
+std::vector<mint> convolution(
+    const std::vector<mint>& a, const std::vector<mint>& b) {
   int n = int(a.size()), m = int(b.size());
   if (!n || !m) return {};
   if (std::min(n, m) <= 60) return convolution_naive(a, b);
   return internal::convolution_fft(a, b);
 }
 
-template <unsigned int mod = 998244353, class T,
-          std::enable_if_t<internal::is_integral<T>::value>* = nullptr>
+template <
+    unsigned int mod = 998244353, class T,
+    std::enable_if_t<internal::is_integral<T>::value>* = nullptr>
 std::vector<T> convolution(const std::vector<T>& a, const std::vector<T>& b) {
   int n = int(a.size()), m = int(b.size());
   if (!n || !m) return {};
 
   using mint = static_modint<mod>;
   std::vector<mint> a2(n), b2(m);
-  for (int i = 0; i < n; i++) {
-    a2[i] = mint(a[i]);
-  }
-  for (int i = 0; i < m; i++) {
-    b2[i] = mint(b[i]);
-  }
+  for (int i = 0; i < n; i++) { a2[i] = mint(a[i]); }
+  for (int i = 0; i < m; i++) { b2[i] = mint(b[i]); }
   auto c2 = convolution(move(a2), move(b2));
   std::vector<T> c(n + m - 1);
-  for (int i = 0; i < n + m - 1; i++) {
-    c[i] = c2[i].val();
-  }
+  for (int i = 0; i < n + m - 1; i++) { c[i] = c2[i].val(); }
   return c;
 }
 
-std::vector<long long> convolution_ll(const std::vector<long long>& a,
-                                      const std::vector<long long>& b) {
+std::vector<long long> convolution_ll(
+    const std::vector<long long>& a, const std::vector<long long>& b) {
   int n = int(a.size()), m = int(b.size());
   if (!n || !m) return {};
 
@@ -308,8 +299,8 @@ std::vector<long long> convolution_ll(const std::vector<long long>& a,
     long long diff =
         c1[i] - internal::safe_mod((long long)(x), (long long)(MOD1));
     if (diff < 0) diff += MOD1;
-    static constexpr unsigned long long offset[5] = {0, 0, M1M2M3, 2 * M1M2M3,
-                                                     3 * M1M2M3};
+    static constexpr unsigned long long offset[5] = {
+        0, 0, M1M2M3, 2 * M1M2M3, 3 * M1M2M3};
     x -= offset[diff % 5];
     c[i] = x;
   }
@@ -340,4 +331,16 @@ void ifft(It a, It a_last) {
 template <class T>
 void ifft(vector<T>& a) {
   ifft(all(a));
+}
+
+template <class T>
+void double_fft(vector<T>& a) {
+  static constexpr atcoder::internal::fft_info<T> info{};
+  int m = a.size();
+  a.reserve(m * 2), a.insert(a.end(), all(a));
+  ifft(a.begin() + m, a.end());
+  T z = T(m).inv();
+  T w = info.root[ctz(m * 2)];
+  rep2(i, m, m * 2) a[i] *= z, z *= w;
+  fft(a.begin() + m, a.end());
 }

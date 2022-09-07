@@ -1,6 +1,6 @@
 #pragma once
 #include "graph.hpp"
-#include "math/sat.hpp"
+#include "arith/sat.hpp"
 
 template <class G>
 vector<vector<weight_t<G>>> ford_fulkerson(const G& graph) {

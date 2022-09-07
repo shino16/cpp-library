@@ -1,7 +1,7 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/queue_operate_all_composite"
 
 #include "ds/deque_agg.hpp"
-#include <atcoder/modint>
+#include <mod/modint.hpp>
 using mint = atcoder::modint998244353;
 
 struct affine {

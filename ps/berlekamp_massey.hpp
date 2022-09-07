@@ -1,15 +1,15 @@
 #pragma once
 #include "prelude.hpp"
 #include "types.hpp"
-#include "atcoder/modint"
+#include "ps/frac.hpp"
 
 template <class It>
 vector<val_t<It>> berlekamp_massey(It a, It a_last) {
   using T = val_t<It>;
-  int intro = 0;
-  while (a != a_last && *a == T(0)) a++, intro++;
+  int init = 0;
+  while (a != a_last && *a == T(0)) a++, init++;
   if (a == a_last) return {};
-  vector<T> q, q2, p = {T(0)};
+  vector<T> q, q2, p(init + 1, T(0));
   for (auto v : {&q, &q2, &p}) v->reserve(a_last - a);
   T d = *a++;
   int t = 1;
@@ -26,6 +26,18 @@ vector<val_t<It>> berlekamp_massey(It a, It a_last) {
       if (to_swap) swap(q2, q), d = e, t = 0;
     }
   }
-  p.insert(p.begin(), intro, T(0));
   return p;
+}
+
+template <class It>
+fraction<val_t<It>> find_generating_function(It a, It a_last) {
+  using T = val_t<It>;
+  using fps = formal_power_series<T>;
+  fps denom = berlekamp_massey(a, a_last);
+  for (auto& e : denom) e = -e;
+  denom.insert(denom.begin(), 1);
+  fps numer(a, a + denom.size() - 1);
+  numer = move(numer).conv(denom, denom.size() - 1);
+  while (denom.back() == 0) denom.pop_back();
+  return fraction<T>(move(numer), move(denom));
 }

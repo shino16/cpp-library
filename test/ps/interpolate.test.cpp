@@ -1,7 +1,7 @@
 #define PROBLEM "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ITP1_1_A"
 
-#include "atcoder/modint"
-#include "ps/interpolate.hpp"
+#include "mod/modint.hpp"
+#include "numeric/interpolate.hpp"
 using mint = atcoder::modint1000000007;
 
 mint a[1000015];

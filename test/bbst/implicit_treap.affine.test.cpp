@@ -1,7 +1,7 @@
 #define PROBLEM \
   "https://judge.yosupo.jp/problem/dynamic_sequence_range_affine_range_sum"
 
-#include <atcoder/modint>
+#include <mod/modint.hpp>
 
 #include "bbst/implicit_treap.hpp"
 using mint = atcoder::modint998244353;

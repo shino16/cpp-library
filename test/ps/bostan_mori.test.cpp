@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/kth_term_of_linearly_recurrent_sequence"
 
-#include "atcoder/modint"
+#include "mod/modint.hpp"
 #include "io.hpp"
 #include "ps/fps.hpp"
 using mint = atcoder::modint998244353;
