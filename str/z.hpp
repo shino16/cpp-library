@@ -1,6 +1,7 @@
 #pragma once
 #include "prelude.hpp"
 
+// z[i] = max { k : s[..k) == s[i..i+k) }
 template <class It>
 vector<int> z_algo(It s, It s_last) {
   int n = s_last - s;

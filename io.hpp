@@ -2,6 +2,12 @@
 #include "prelude.hpp"
 #include "util/transpose.hpp"
 
+struct int1 {
+  int val;
+  int1(int a = 1): val(a - 1) {}
+  operator int() const { return val; }
+};
+
 template <size_t BUF_SIZE = 1 << 26>
 class stdin_reader {
  public:

@@ -1,6 +1,7 @@
 #pragma once
 #include "prelude.hpp"
 
+// pi[i] = max { k : s[0..k) == s[i-k..i) }
 template <class It>
 vector<int> kmp(It s, It s_last) {
   int n = s_last - s;
