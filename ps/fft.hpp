@@ -337,7 +337,7 @@ template <class T>
 void double_fft(vector<T>& a) {
   static constexpr atcoder::internal::fft_info<T> info{};
   int m = a.size();
-  a.reserve(m * 2), a.insert(a.end(), all(a));
+  a.resize(m * 2), copy(a.begin(), a.begin() + m, a.begin() + m);
   ifft(a.begin() + m, a.end());
   T z = T(m).inv();
   T w = info.root[ctz(m * 2)];

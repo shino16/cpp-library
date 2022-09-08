@@ -13,8 +13,6 @@ class doubling {
       rep(x, size) data[h + 1][x] = data[h][data[h][x]];
     }
   }
-  template <class Iter>
-  doubling(Iter f, Iter l) : doubling(f, l, l - f) {}
 
   int apply(ll power, int x) const {
     rep(h, height) if (power >> h & 1) x = data[h][x];

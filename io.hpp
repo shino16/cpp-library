@@ -39,7 +39,11 @@ class stdin_reader {
   template <class... Ts> void operator()(Ts&... xs) { (read(xs), ...); }
   int operator--() { return (int)*this - 1; }
   template <class T> void vec(vector<T>& v, int n) { v.resize(n); for (auto& e : v) read(e); }
-  template <class T> vector<T> vec(int n) { vector<T> v(n); return vec(v, n), v; }
+  template <class T> vector<T> vec(int n) { vector<T> v; return vec(v, n), v; }
+  template <class T>
+  void vvec(vector<vector<T>>& v, int n, int m) { v.resize(n); for (auto& e : v) vec(e, m); }
+  template <class T>
+  vector<vector<T>> vvec(int n, int m) { vector<vector<T>> v; return vvec(v, n, m), v; }
   template <class... Ts> auto transpose(int n) { return ::transpose(vec<tuple<Ts...>>(n)); }
 
  private:
@@ -93,7 +97,7 @@ class stdout_writer {
   }
 
 #define INSTANT(s) \
-  void s() { writeln("s"); }
+  void s() { writeln(#s); }
   INSTANT(No) INSTANT(NO) INSTANT(Aoki)
   INSTANT(possible) INSTANT(Possible) INSTANT(POSSIBLE)
   INSTANT(impossible) INSTANT(Impossible) INSTANT(IMPOSSIBLE)
