@@ -75,7 +75,7 @@ class stdout_writer {
   }
   template <class T> void_t<decltype(&T::val)> write(T x) { write(x.val()); }
   void write(double x) {
-    static char buf[40]; sprintf(buf, "%.10f", x); write(buf);
+    static char tmp[40]; sprintf(tmp, "%.10f", x); write(tmp);
   }
   void write(const char* s) { while (*s) *p++ = *s++; }
   void write(const string& s) { memcpy(p, s.c_str(), s.size()), p += s.size(); }
