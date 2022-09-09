@@ -8,7 +8,7 @@ struct int1 {
   operator int() const { return val; }
 };
 
-template <size_t BUF_SIZE = 1 << 26>
+template <size_t BufSize = 1 << 26>
 class stdin_reader {
  public:
   stdin_reader() { buf[fread(buf, 1, sizeof(buf), stdin)] = 0; }
@@ -47,13 +47,13 @@ class stdin_reader {
   template <class... Ts> auto transpose(int n) { return ::transpose(vec<tuple<Ts...>>(n)); }
 
  private:
-  char buf[BUF_SIZE], *p = buf;
+  char buf[BufSize], *p = buf;
   void skip() { while (*p <= ' ') p++; }
   template <class T, size_t... Is>
   void read_tuple_like(T& x, index_sequence<Is...>) { (*this)(get<Is>(x)...); }
 };
 
-template <size_t BUF_SIZE = 1 << 26>
+template <size_t BufSize = 1 << 26>
 class stdout_writer {
  public:
   ~stdout_writer() { flush(); }
@@ -107,7 +107,7 @@ class stdout_writer {
   void Takahashi(bool b = true) { writeln(b ? "Takahashi" : "Aoki"); }
 
  private:
-  char buf[BUF_SIZE], *p = buf;
+  char buf[BufSize], *p = buf;
   template <class T, size_t... Is> void write_tuple(const T& x, index_sequence<Is...>) {
     ((write(get<Is>(x)), write_char(' ')), ...), --p;
   }

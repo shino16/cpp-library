@@ -7,9 +7,9 @@
 template <
     class It,
     enable_if_t<is_base_of_v<atcoder::internal::modint_base, val_t<It>>>* = nullptr>
-val_t<It> interpolate(It a, It a_last, val_t<It> x, val_t<It> s = 0) {
+val_t<It> interpolate(It a, It last, val_t<It> x, val_t<It> s = 0) {
   x -= s;
-  int n = a_last - a;
+  int n = last - a;
   val_t<It> fact = 1;
   rep(i, n - 1) fact *= i + 1;
   vector<val_t<It>> ifact(n), cuml(n + 1), cumr(n + 1);

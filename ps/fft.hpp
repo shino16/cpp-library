@@ -57,9 +57,9 @@ struct fft_info {
 };
 
 template <class It, internal::is_static_modint_t<val_t<It>>* = nullptr>
-void butterfly(It a, It a_last) {
+void butterfly(It a, It last) {
   using mint = val_t<It>;
-  int n = a_last - a;
+  int n = last - a;
   int h = internal::ceil_pow2(n);
 
   static constexpr fft_info<mint> info;
@@ -114,9 +114,9 @@ void butterfly(std::vector<mint>& a) {
 }
 
 template <class It, internal::is_static_modint_t<val_t<It>>* = nullptr>
-void butterfly_inv(It a, It a_last) {
+void butterfly_inv(It a, It last) {
   using mint = val_t<It>;
-  int n = a_last - a;
+  int n = last - a;
   int h = internal::ceil_pow2(n);
 
   static constexpr fft_info<mint> info;
@@ -313,8 +313,8 @@ std::vector<long long> convolution_ll(
 #endif  // ATCODER_CONVOLUTION_HPP
 
 template <class It>
-void fft(It a, It a_last) {
-  atcoder::internal::butterfly(a, a_last);
+void fft(It a, It last) {
+  atcoder::internal::butterfly(a, last);
 }
 
 template <class T>
@@ -324,8 +324,8 @@ void fft(vector<T>& a, int n = -1) {
 }
 
 template <class It>
-void ifft(It a, It a_last) {
-  atcoder::internal::butterfly_inv(a, a_last);
+void ifft(It a, It last) {
+  atcoder::internal::butterfly_inv(a, last);
 }
 
 template <class T>

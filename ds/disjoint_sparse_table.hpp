@@ -7,9 +7,9 @@ class disjoint_sparse_table {
  public:
   using value_type = typename M::type;
   template <class It>
-  disjoint_sparse_table(It a, It a_last, M m = M()) : m(m) {
-    int n = a_last - a;
-    data.emplace_back(a, a_last);
+  disjoint_sparse_table(It a, It last, M m = M()) : m(m) {
+    int n = last - a;
+    data.emplace_back(a, last);
     int w = 2;
     while (w < n) {
       vector<value_type> row(n, m.unit());

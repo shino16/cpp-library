@@ -59,11 +59,11 @@ class implicit_treap {
       : upd(upd), prop(prop) { }
   template <class It>
   implicit_treap(
-      It a, It a_last, Update upd = Update(), Propagate prop = Propagate())
+      It first, It last, Update upd = Update(), Propagate prop = Propagate())
       : upd(upd), prop(prop) {
-    vector<link> ps(bit_ceil(distance(a, a_last)) * 2);
-    for (auto it = ps.begin(); a != a_last; it++, a++)
-      *it = (link) new node(*a);
+    vector<link> ps(bit_ceil(distance(first, last)) * 2);
+    for (auto it = ps.begin(); first != last; it++, first++)
+      *it = (link) new node(*first);
     for (int i = 0; i + 1 < ps.size(); i += 2)
       ps.push_back(merge(ps[i], ps[i + 1]));
     set_l(&head, ps.back());

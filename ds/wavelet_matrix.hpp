@@ -5,7 +5,7 @@ template <uint64_t U, class T = unsigned>
 class wavelet_matrix {
  public:
   template <class It>
-  wavelet_matrix(It a, It a_last) : wavelet_matrix(vector<T>(a, a_last)) {}
+  wavelet_matrix(It first, It last) : wavelet_matrix(vector<T>(first, last)) { }
   wavelet_matrix(vector<T> a) : size_(a.size()) {
     vector<bool> bit(size_);
     vector<T> nxt(size_);
@@ -48,10 +48,8 @@ class wavelet_matrix {
     l += k;
     if (l >= r) return -1;
     rep(t, B) {
-      if (x >> t & 1)
-        l = mat[t].select1(l - zeros[t]);
-      else
-        l = mat[t].select0(l);
+      if (x >> t & 1) l = mat[t].select1(l - zeros[t]);
+      else l = mat[t].select0(l);
     }
     return l;
   }

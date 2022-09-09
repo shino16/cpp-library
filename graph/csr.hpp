@@ -1,7 +1,9 @@
 #pragma once
 #include "graph.hpp"
-#include "io.hpp"
 #include "range.hpp"
+
+template <size_t> struct stdin_reader;
+extern stdin_reader<1 << 26> in;
 
 template <class Weight = void, bool Directed = false, bool OneBased = true>
 class csr_graph {
@@ -46,7 +48,7 @@ class csr_graph {
   vector<edge_t<csr_graph>> es;
   vector<typename vector<edge_t<csr_graph>>::iterator> ls, rs;
   template <size_t Size = 1 << 26>
-  auto read_e(stdin_reader<Size>& read) {
+  auto read_e(stdin_reader<Size>& read = in) {
     using E = conditional_t<is_weighted_v<csr_graph>, tuple<int, int, Weight>,
                             pair<int, int>>;
     vector<E> res(m);

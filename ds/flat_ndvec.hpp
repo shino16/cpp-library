@@ -12,15 +12,21 @@ class flat_ndvec {
   auto begin() const { return data.begin(); }
   auto end() { return data.end(); }
   auto end() const { return data.end(); }
-  T& operator[](const int (&is)[N]) {
-    int idx = 0;
-    for (int i = 0; i < N; i++) idx += factor[i] * is[i];
-    return data[idx];
-  }
   const T& operator[](const int (&is)[N]) const {
     int idx = 0;
     for (int i = 0; i < N; i++) idx += factor[i] * is[i];
     return data[idx];
+  }
+  T& operator[](const int (&is)[N]) {
+    return const_cast<T&>(as_const(*this)[is]);
+  }
+  template <class... Ts>
+  const T& operator()(Ts... is) const {
+    return (*this)[{is...}];
+  }
+  template <class... Ts>
+  T& operator()(Ts... is) {
+    return (*this)[{is...}];
   }
 
  private:

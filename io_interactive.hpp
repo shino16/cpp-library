@@ -1,6 +1,7 @@
 #pragma once
 #include "prelude.hpp"
 
+template <size_t BufSize = 1 << 26>
 class stdin_reader {
  public:
   stdin_reader() { next(); }
@@ -58,12 +59,12 @@ class stdout_writer {
     if constexpr (is_signed_v<T>) if (x < 0) write_char('-'), x = -x;
     static char tmp[16];
     char* q = end(tmp);
-    while (x >= 10000) memcpy(q -= 4, four_digits.data + x % 10000 * 4, 4), x /= 10000;
+    while (x >= 10000) memcpy(q -= 4, digits.data + x % 10000 * 4, 4), x /= 10000;
     if (x < 10) write_char('0' + x);
     else if (x < 100)
       write_char('0' + (uint8_t)x / 10), write_char('0' + (uint8_t)x % 10);
-    else if (x < 1000) memcpy(p, four_digits.data + x * 4 + 1, 3), p += 3;
-    else memcpy(p, four_digits.data + x * 4, 4), p += 4;
+    else if (x < 1000) memcpy(p, digits.data + x * 4 + 1, 3), p += 3;
+    else memcpy(p, digits.data + x * 4, 4), p += 4;
     memcpy(p, q, end(tmp) - q), p += end(tmp) - q;
   }
   template <class T> void_t<decltype(&T::val)> write(T x) { write(x.val()); }
@@ -112,8 +113,8 @@ class stdout_writer {
       for (int i = 0; i < 10000; i++)
         for (int n = i, j = 4; j--;) data[i * 4 + j] = n % 10 + '0', n /= 10;
     }
-  } static constexpr four_digits{};
+  } static constexpr digits{};
 };
 
-static stdin_reader in;
+static stdin_reader<> in;
 static stdout_writer<> out;

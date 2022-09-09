@@ -6,8 +6,8 @@ class bit_vector {
  public:
   bit_vector(int n = 0) : bit(n / 8 + 1), sum(n / 8 + 2) {}
   template <class It>
-  bit_vector(It a, It a_last) : bit_vector(a_last - a) {
-    int n = a_last - a;
+  bit_vector(It a, It last) : bit_vector(last - a) {
+    int n = last - a;
     rep(i, n) bit[i / 64] |= uint64_t(a[i] != 0) << (i % 64);
     rep(i, bit.size()) sum[i + 1] = sum[i] + popcnt(bit[i]);
   }

@@ -201,10 +201,10 @@ class formal_power_series : public vector<T> {
   fps div(sparse v) const& { return fps(*this).div(move(v)); }
 
   template <class It>
-  static fps prod(It a, It a_last) {
-    if (a == a_last) return one();
-    vector<fps> vec(a, a_last);
-    vec.reserve(distance(a, a_last) * 2);
+  static fps prod(It first, It last) {
+    if (first == last) return one();
+    vector<fps> vec(first, last);
+    vec.reserve(distance(first, last) * 2);
     for (int i = 0; i + 1 < vec.size(); i += 2)
       vec.push_back(move(vec[i]).conv(move(vec[i + 1])));
     return vec.back();
