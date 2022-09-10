@@ -3,7 +3,7 @@
 #include "graph/tree/dfs.hpp"
 #include "func/id.hpp"
 
-template <class G, class T, class Add, class Remove, class Inv = ident>
+template <class G, class T, class Add, class Remove, class Inv = identity>
 vector<T> rerooting(const G& graph, T unit = T(), Add&& add = Add(),
                     Remove remove = Remove(), Inv e_inv = Inv()) {
   graph_trait<G> g(graph);

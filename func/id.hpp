@@ -1,7 +1,7 @@
 #pragma once
 #include "prelude.hpp"
 
-struct ident {
+struct identity {
   template <class T>
   T operator()(T x) const { return x; }
 };
