@@ -26,9 +26,7 @@ pair<vector<int>, int> row_unreduced(vector<vector<T>>& a) {
 // Returns pivots and rank
 template <class T>
 pair<vector<int>, int> row_reduce(vector<vector<T>>& a) {
-  vector<int> pivots;
-  int rank;
-  tie(pivots, rank) = row_unreduced(a);
+  auto [pivots, rank] = row_unreduced(a);
   rep(i, rank) {
     T r = T(1) / a[i][pivots[i]];
     rep2(j, pivots[i], a[i].size()) a[i][j] *= r;
