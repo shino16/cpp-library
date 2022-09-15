@@ -37,6 +37,32 @@ class segment_tree {
     f(data[i + size()]);
     for (i += size(); i >>= 1;) data[i] = m.op(data[i << 1], data[i << 1 | 1]);
   }
+  // min r s.t. !f(prod(l, r)) or size()+1 if no such r exists
+  template <class F>
+  int partition_point(int l, F f) const {
+    if (!f(m.unit())) return l;
+    if (f(data[1])) return size() + 1;
+    if (l < size() && !f(data[l + size()])) return l + 1;
+    int r = l + size();
+    while (r % 2 == 0) r /= 2;
+    value_type acc = m.unit();
+    do {
+      value_type acc2 = m.op(acc, data[r]);
+      if (f(acc2)) {
+        acc = acc2, r++;
+        while (r % 2 == 0) r /= 2;
+      } else if (r < size()) {
+        r *= 2;
+      }
+    } while (r < size());
+    if (f(m.op(acc, data[r]))) r++;
+    return (++r -= size()) < l ? size() : r;
+  }
+  // mint r s.t. prod(l, r) >= x
+  template <class Comp = less<>>
+  int lower_bound(int l, value_type x, Comp comp = Comp()) const {
+    return partition_point(l, [&](auto y) { return comp(y, x); });
+  }
 
  private:
   M m;

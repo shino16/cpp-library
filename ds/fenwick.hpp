@@ -43,7 +43,7 @@ class fenwick_tree {
     }
     return i + 1;
   }
-  // min i s.t. !comp(sum(i), x)
+  // min i s.t. sum(i) >= x
   template <class Comp = less<value_type>>
   int lower_bound(value_type x, Comp comp = Comp()) const {
     return partition_point([&](value_type s) { return comp(s, x); });
