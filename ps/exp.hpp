@@ -12,7 +12,7 @@ vector<T> exp(const vector<T>& p, int deg = -1) {
   vector<T> deriv(z);
   rep(i, p.size() - 1) deriv[i] = p[i + 1] * (i + 1);
   vector<T> h(1), q(1);
-  for (auto p : {&f, &ffft, &g, &gfft, &h, &q}) p->reserve(z);
+  for (auto pt : {&f, &ffft, &g, &gfft, &h, &q}) pt->reserve(z);
   const T i2 = T(2).inv();
   T im = 1, imm = 1, im2 = i2;
   for (int m = 1; m < z; m <<= 1, im = im2, imm = im * im, im2 *= i2) {

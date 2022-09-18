@@ -5,7 +5,7 @@
 #include "graph/csr.hpp"
 
 int main() {
-  auto G = csr_graph<int, false, false>::tree();
+  auto G = csr_graph<int, false, false>::tree(in);
   int n = G.size();
   vector<ll> d(n);
   dfs(G, 0, [&](auto e, int p) { d[e.to] = d[p] + e.w(); });

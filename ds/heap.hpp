@@ -45,7 +45,7 @@ class heap {
   pair<int, T> pop() {
     pair<int, T> res = move(data[1]);
     pos[res.first] = -1;
-    if (data.size() == 1) {
+    if (data.size() == 2) {
       data.pop_back();
       return res;
     }

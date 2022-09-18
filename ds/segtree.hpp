@@ -56,12 +56,40 @@ class segment_tree {
       }
     } while (r < size());
     if (f(m.op(acc, data[r]))) r++;
-    return (++r -= size()) < l ? size() : r;
+    r = r + 1 - size();
+    return r <= l ? size() + 1 : r;
   }
-  // mint r s.t. prod(l, r) >= x
+  // max l s.t. !f(prod(l, r)) or -1 if no such l exists
+  template <class F>
+  int rpartition_point(int r, F f) const {
+    if (!f(m.unit())) return r;
+    if (f(data[1])) return -1;
+    if (r > 0 && !f(data[r - 1 + size()])) return r - 1;
+    int l = r + size() - 1;
+    while (l % 2 == 1 && l > 1) l /= 2;
+    value_type acc = m.unit();
+    do {
+      value_type acc2 = m.op(data[l], acc);
+      if (f(acc2)) {
+        acc = acc2, l--;
+        while (l % 2 == 1 && l > 1) l /= 2;
+      } else if (l < size()) {
+        l = l * 2 + 1;
+      }
+    } while (l < size());
+    if (f(m.op(data[l], acc))) l--;
+    l = l - size();
+    return l >= r ? -1 : l;
+  }
+  // min r s.t. prod(l, r) >= x
   template <class Comp = less<>>
   int lower_bound(int l, value_type x, Comp comp = Comp()) const {
     return partition_point(l, [&](auto y) { return comp(y, x); });
+  }
+  // max l s.t. prod(l, r) >= x
+  template <class Comp = less<>>
+  int rlower_bound(int r, value_type x, Comp comp = Comp()) const {
+    return rpartition_point(r, [&](auto y) { return comp(y, x); });
   }
 
  private:
