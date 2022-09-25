@@ -1,3 +1,3 @@
 [[languages.cpp.environments]]
 CXX = "g++"
-CXXFLAGS = ["-O3", "-std=c++17", "-I", "ac-library", "-g", "-fsanitize=address,undefined", "-Wno-unused-result"]
+CXXFLAGS = ["-O3", "-std=c++17", "-g", "-fsanitize=address,undefined", "-Wno-unused-result"]
