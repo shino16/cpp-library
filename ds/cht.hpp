@@ -1,7 +1,7 @@
 #pragma once
 #include "la/vec.hpp"
 #include "arith/sqrt.hpp"
-#include "numeric/int/bisect.hpp"
+#include "num/int/bisect.hpp"
 
 template <class T>
 using linear_fn = pair<T, T>;
