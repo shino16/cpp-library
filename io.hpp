@@ -20,5 +20,5 @@ class stdout_writer {
 #undef INSTANT
 };
 
-static stdin_reader<> in;
-static stdout_writer<> out;
+stdin_reader<> in;
+stdout_writer<> out;
