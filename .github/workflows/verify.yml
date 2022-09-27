@@ -23,8 +23,9 @@ jobs:
         rm -rf ac-library
         mkdir ac-library
         mv tmp ac-library/atcoder
-        rm .gitmodules
 
+    - run: echo ".gitmodules" >> .git/info/exclude
+ 
     - name: Run tests
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
