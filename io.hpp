@@ -22,3 +22,4 @@ class stdout_writer {
 
 stdin_reader<> in;
 stdout_writer<> out;
+
