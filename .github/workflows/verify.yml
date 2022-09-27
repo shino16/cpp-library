@@ -17,21 +17,10 @@ jobs:
     - name: Install dependencies
       run: pip3 install -U online-judge-verify-helper
 
-    - name: Clean ac-library
-      run: |
-        mv ac-library/atcoder tmp 
-        rm -rf ac-library/*
-        mv tmp ac-library/atcoder
-        git config --global user.name 'GitHub'
-        git config --global user.email 'noreply@github.com'
-        git -C ac-library commit -am 'clean up'
-
     - name: Run tests
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         YUKICODER_TOKEN: ${{ secrets.YUKICODER_TOKEN }}
         GH_PAT: ${{ secrets.GH_PAT }}
       run: oj-verify all
-
-    - run: ls -aR
 
