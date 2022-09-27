@@ -20,19 +20,10 @@ jobs:
     - name: Clean ac-library
       run: |
         mv ac-library/atcoder tmp 
-        rm -rf ac-library
-        mkdir ac-library
+        rm -rf ac-library/*
         mv tmp ac-library/atcoder
-
-    - run: echo ".gitmodules" >> .git/info/exclude
- 
-    - name: Run tests
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        YUKICODER_TOKEN: ${{ secrets.YUKICODER_TOKEN }}
-      run: oj-verify all
-
-    - run: ls -aR
+        git -C ac-library add atcoder
+        git -C ac-library commit -m "clean up"
 
     - name: Run tests
       env:
@@ -42,3 +33,4 @@ jobs:
       run: oj-verify all
 
     - run: ls -aR
+
