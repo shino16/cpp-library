@@ -17,7 +17,8 @@ jobs:
     - name: Install dependencies
       run: pip3 install -U online-judge-verify-helper
 
-    - run: mkdir -p .verify-helper/markdown && cp .gitmodules "$_"
+    - name: Clean ac-library
+      run: mv ac-library/atcoder . && rm -rf ac-library/* && mv atcoder ac-library
 
     - name: Run tests
       env:
