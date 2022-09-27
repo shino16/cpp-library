@@ -19,12 +19,10 @@ jobs:
 
     - name: Clean ac-library
       run: |
-        mkdir tmp 
         mv ac-library/atcoder tmp 
         rm -rf ac-library
         mkdir ac-library
-        mv tmp/atcoder ac-library 
-        rm -d tmp
+        mv tmp ac-library/atcoder
 
     - name: Run tests
       env:
