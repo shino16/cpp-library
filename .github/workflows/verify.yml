@@ -24,8 +24,7 @@ jobs:
         mv tmp ac-library/atcoder
         git config --global user.name 'GitHub'
         git config --global user.email 'noreply@github.com'
-        git -C ac-library add atcoder
-        git -C ac-library commit -m 'clean up'
+        git -C ac-library commit -am 'clean up'
 
     - name: Run tests
       env:
