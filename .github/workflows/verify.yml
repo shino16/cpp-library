@@ -23,6 +23,7 @@ jobs:
         rm -rf ac-library
         mkdir ac-library
         mv tmp ac-library/atcoder
+        rm .gitmodules
 
     - name: Run tests
       env:
