@@ -31,5 +31,5 @@ jobs:
         YUKICODER_TOKEN: ${{ secrets.YUKICODER_TOKEN }}
       run: oj-verify all
 
-    - run: ls -R
+    - run: ls -aR
 
