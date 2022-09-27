@@ -18,7 +18,7 @@ jobs:
       run: pip3 install -U online-judge-verify-helper
 
     - name: Clean ac-library
-      run: mv ac-library/atcoder . && rm -rf ac-library/* && mv atcoder ac-library
+      run: mkdir tmp && mv ac-library/atcoder tmp && rm -rf ac-library/* && mv tmp/atcoder ac-library && rm -d tmp
 
     - name: Run tests
       env:
