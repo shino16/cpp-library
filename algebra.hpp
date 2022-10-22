@@ -41,3 +41,10 @@ struct minimum {
   type unit() const { return numeric_limits<T>::max(); }
   type op(type a, type b) const { return a > b ? b : a; }
 };
+
+template <class T, T nul = -1>
+struct assign {
+  using type = T;
+  type unit() const { return nul; }
+  type op(type a, type b) const { return b == nul ? a : b; }
+};

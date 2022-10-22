@@ -29,12 +29,12 @@ void dfs_bottom_up(const G& graph, int s, F&& f) {
 template <class G, class F>
 void dfs_ord(const G& graph, int s, F&& f) {
   f(s, -1);
-  dfs(graph, s, [&](int v, int p) { f(v, p); });
+  dfs(graph, s, [&](auto&& v, int p) { f(v, p); });
 }
 
 // f(edge, par or -1)
 template <class G, class F>
 void dfs_rev_ord(const G& graph, int s, F&& f) {
-  dfs_bottom_up(graph, s, [&](int v, int p) { f(v, p); });
-  f(s, -1);
+  dfs_bottom_up(graph, s, [&](auto&& v, int p) { f(v, p); });
+  f(weighted_edge<weight_t<G>>{s, -1}, -1);
 }

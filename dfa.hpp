@@ -1,5 +1,6 @@
 #pragma once
 #include "prelude.hpp"
+#include "ds/hash_map.hpp"
 
 namespace dfa {
 
@@ -76,7 +77,7 @@ const string digits = "0123456789";
 template <class T, class X, class Iter = string::const_iterator>
 T count(const X &dfa, int n, Iter alphabets_f = begin(digits),
         Iter alphabets_l = end(digits)) {
-  map<typename X::state, T> prv, nxt;
+  hash_map<typename X::state, T> prv, nxt;
   nxt[dfa.init()] = T(1);
   rep(i, n) {
     prv = move(nxt);
@@ -89,8 +90,30 @@ T count(const X &dfa, int n, Iter alphabets_f = begin(digits),
     }
   }
   T ans(0);
-  for (auto [s, k] : nxt)
-    if (dfa.accept(s)) ans += k;
+  for (auto [s, k] : nxt) if (dfa.accept(s)) ans += k;
+  return ans;
+}
+
+template <class T, class X, class Iter = string::const_iterator>
+T sum(const X &dfa, int n, Iter alphabets_f = begin(digits),
+        Iter alphabets_l = end(digits)) {
+  hash_map<typename X::state, pair<T, T>, simple_hash<typename X::state>> prv, nxt;
+  nxt[dfa.init()] = pair(T(0), T(1));
+  rep(i, n) {
+    prv = move(nxt);
+    nxt.clear();
+    for (auto [s, k] : prv) {
+      rep2(p, alphabets_f, alphabets_l) {
+        auto s2 = dfa.next(s, *p, i);
+        if (!dfa.unsuccessful(s2)) {
+          nxt[s2].first += k.first * 10 + (*p-'0') * k.second;
+          nxt[s2].second += k.second;
+        }
+      }
+    }
+  }
+  T ans(0);
+  for (auto [s, k] : nxt) if (dfa.accept(s)) ans += k.first;
   return ans;
 }
 

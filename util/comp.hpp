@@ -4,7 +4,7 @@
 template <class T>
 class compress {
  public:
-  compress(vector<T> v) : data(move(v)) {
+  compress(vector<T> v = {}) : data(move(v)) {
     sort(data.begin(), data.end());
     data.erase(unique(data.begin(), data.end()), data.end());
   }

@@ -53,7 +53,7 @@ struct anti_hack_hash<T, void_t<decltype(tuple_size<T>::value)>> {
   template <size_t... Is>
   static size_t hash_impl(const T& x, index_sequence<Is...>) {
     static auto seed = make_seed();
-    T res = 0;
+    size_t res = 0;
     ((void)(res = splitmix64(res + get<Is>(x) + get<Is>(seed))), ...);
     return res;
   }
