@@ -13,9 +13,5 @@
 "test/ds/implicit_treap.index_of.test.cpp": "2022-10-23 00:26:08 +0100",
 "test/ds/segtree.partition_point.test.cpp": "2022-10-23 00:26:08 +0100",
 "test/ds/segtree.rmq.test.cpp": "2022-10-23 00:26:08 +0100",
-"test/ds/segtree.rsq.test.cpp": "2022-10-23 00:26:08 +0100",
-"test/ds/sparse_table.test.cpp": "2022-10-23 00:26:08 +0100",
-"test/ds/w_ary_tree.test.cpp": "2022-10-23 00:26:08 +0100",
-"test/ds/wavelet_matrix/pred_succ.test.cpp": "2022-10-23 00:26:08 +0100",
-"test/ds/wavelet_matrix/quantile.test.cpp": "2022-10-23 00:26:08 +0100"
+"test/ds/segtree.rsq.test.cpp": "2022-10-23 00:26:08 +0100"
 }
