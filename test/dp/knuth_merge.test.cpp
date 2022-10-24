@@ -9,6 +9,6 @@ int main() {
   scanf("%d", &n);
   rep(i, n) scanf("%lld", w+i);
   rep(i, n) sum[i+1] = sum[i] + w[i];
-  ll ans = knuth_merge_dp(n, [](int l, int r) { return sum[r] - sum[l]; });
-  printf("%lld\n", ans);
+  auto ans = knuth_merge_dp(n, [](int l, int r) { return sum[r] - sum[l]; });
+  printf("%lld\n", ans[0][n]);
 }

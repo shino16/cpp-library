@@ -4,7 +4,9 @@
 // O(n^2)
 // Starts with dp(l, r) = 0 (r - l <= 1) and
 // dp(l, r) = min { dp(l, k) + dp(k, r) + cost(l, r) : l < k < r }
-// Returns dp(0, n)
+// Requires cost(b,c) <= cost(a,d) and
+//          cost(a,c) + cost(b,d) <= cost(a,d) + cost(b,c)
+// for a < b < c < d (wider is worse).
 template <class F>
 auto knuth_merge_dp(int n, F cost) {
   using T = decltype(cost(0, 0));
@@ -19,5 +21,5 @@ auto knuth_merge_dp(int n, F cost) {
     }
     swap(opt, opt2);
   }
-  return dp[0][n];
+  return dp;
 }
