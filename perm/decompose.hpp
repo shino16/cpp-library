@@ -2,7 +2,7 @@
 #include "prelude.hpp"
 
 template <class Iter>
-auto decompose(Iter first, Iter last) -> vector<vector<int>> {
+vector<vector<int>> decompose(Iter first, Iter last) {
   int n = last - first;
   vector<bool> done(n, false);
   vector<vector<int>> ans;
