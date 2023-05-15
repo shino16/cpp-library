@@ -4,6 +4,7 @@
 
 template <class T>
 vector<pair<T, int>> factorize(T n) {
+  assert(n >= 1);
   vector<pair<T, int>> ans;
   int t = ctz(n);
   if (t) ans.emplace_back(2, t), n >>= t;

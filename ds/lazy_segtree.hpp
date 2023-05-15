@@ -46,7 +46,7 @@ class lazy_segment_tree {
     build(trunc(l + size()));
     build(trunc(r + size()) - 1);
   }
-  void add(int i, value_type v) {
+  void mul(int i, value_type v) {
     exec(i, [=](value_type& e) { e = m.op(e, v); });
   }
   void set(int i, value_type v) {

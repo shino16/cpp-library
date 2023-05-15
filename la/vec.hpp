@@ -29,6 +29,12 @@ T& operator-=(T& a, const U& b) {
   return a;
 }
 
+template <class T, class U>
+T& operator*=(T& a, U r) {
+  for_each(all(a), [=](auto& x) { x *= r; });
+  return a;
+}
+
 template <
     class T, class U,
     enable_if_t<tuple_size<T>::value == tuple_size<U>::value>* = nullptr>
@@ -44,6 +50,13 @@ template <
 T operator-(const T& a, const U& b) {
   T c(a);
   c -= b;
+  return c;
+}
+
+template <class T, class U>
+T operator*(U r, const T& a) {
+  T c(a);
+  c *= r;
   return c;
 }
 

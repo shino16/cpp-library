@@ -9,6 +9,7 @@ class csr_graph {
  public:
   using weight_type = Weight;
 
+  csr_graph() = default;
   template <class It>
   csr_graph(int n, It e, It e_last) : n(n), m(distance(e, e_last)) {
     init(e, e_last);

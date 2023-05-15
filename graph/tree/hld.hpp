@@ -32,16 +32,16 @@ class hld {
   void paths(int u, int v, F&& f, bool exclude_lca = true) const {
     while (head[u] != head[v]) {
       if (in[u] > in[v]) swap(u, v);
-      f(idx(head[v]), idx(v) + 1);
+      call_f(f, idx(head[v]), idx(v) + 1);
       v = par[head[v]];
     }
     if (in[u] > in[v]) swap(u, v);
-    f(idx(u) + exclude_lca, idx(v) + 1);
+    call_f(f, idx(u) + exclude_lca, idx(v) + 1);
   }
 
   template <class F>
   void subtree(int v, F&& f, bool exclude_root = true) const {
-    f(in[v] + exclude_root, out[v]);
+    call_f(f, in[v] + exclude_root, out[v]);
   }
 
  private:
@@ -69,5 +69,10 @@ class hld {
       if (u != par[v] && u != heavy[v]) head[u] = u, decompose(g, t, u);
     });
     out[v] = t;
+  }
+
+  template <class F>
+  void call_f(F& f, int l, int r) const {
+    if (r - l) f(l, r);
   }
 };

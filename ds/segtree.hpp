@@ -26,7 +26,7 @@ class segment_tree {
     }
     return m.op(accl, accr);
   }
-  void add(int i, value_type v) {
+  void mul(int i, value_type v) {
     exec(i, [=](value_type& e) { e = m.op(e, v); });
   }
   void set(int i, value_type v) {

@@ -30,7 +30,7 @@ class dual_segment_tree {
       if (R & 1) apply(--R, x);
     }
   }
-  void add(int i, value_type v) {
+  void mul(int i, value_type v) {
     exec(i, [=](value_type& e) { e = e.op(e, v); });
   }
   void set(int i, value_type v) {
