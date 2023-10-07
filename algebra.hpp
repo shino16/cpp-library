@@ -1,7 +1,7 @@
 #pragma once
 #include "prelude.hpp"
 
-#define CONST(val) [] { return val; }
+#define CONST(val) [=] { return val; }
 #define WRAP_FN(func) \
   [](auto&&... args) { return func(forward<decltype(args)>(args)...); }
 
