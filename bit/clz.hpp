@@ -1,8 +1,10 @@
 #pragma once
 #include "prelude.hpp"
 
+#pragma GCC target("lzcnt")
+
 template <class T>
-__attribute__ ((target ("lzcnt"))) int clz(T x) {
+int clz(T x) {
     if (!x) return sizeof(T) * 8;
     if constexpr (sizeof(T) <= sizeof(unsigned)) {
         return __builtin_clz((unsigned)x);

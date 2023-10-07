@@ -1,8 +1,10 @@
 #pragma once
 #include "prelude.hpp"
 
+#pragma GCC target("popcnt")
+
 template <class T>
-__attribute__((target("popcnt"))) int popcnt(T a) {
+int popcnt(T a) {
   if constexpr (sizeof(T) <= sizeof(unsigned)) {
     return __builtin_popcount((unsigned)a);
   } else if constexpr (sizeof(T) <= sizeof(unsigned long long)) {

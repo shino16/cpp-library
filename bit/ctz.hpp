@@ -1,8 +1,10 @@
 #pragma once
 #include "prelude.hpp"
 
+#pragma GCC target("bmi")
+
 template <class T>
-__attribute__((target("bmi"))) int ctz(T x) {
+int ctz(T x) {
   if (!x) return sizeof(T) * 8;
   if constexpr (sizeof(T) <= sizeof(unsigned)) {
     return __builtin_ctz((unsigned)x);
