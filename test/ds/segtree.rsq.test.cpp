@@ -10,7 +10,7 @@ int main() {
   while (q--) {
     scanf("%d%d%d", &c, &x, &y);
     if (c == 0)
-      rsq.add(x - 1, y);
+      rsq.mul(x - 1, y);
     else
       printf("%d\n", rsq.prod(x - 1, y));
   }

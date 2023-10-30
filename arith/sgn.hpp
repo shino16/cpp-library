@@ -2,7 +2,4 @@
 #include "prelude.hpp"
 
 template <class T>
-T sgn(T x) {
-  return (x > 0) - (x < 0);
-}
-
+T sgn(T x) { return (x > 0) - (x < 0); }
