@@ -18,6 +18,5 @@
 "test/ds/w_ary_tree.test.cpp": "2023-10-30 22:41:29 +0000",
 "test/ds/wavelet_matrix/pred_succ.test.cpp": "2023-10-30 22:41:29 +0000",
 "test/ds/wavelet_matrix/quantile.test.cpp": "2023-10-30 22:41:29 +0000",
-"test/ds/wavelet_matrix/rangefreq.test.cpp": "2023-10-30 22:41:29 +0000",
-"test/graph/bellman_ford.test.cpp": "2023-10-30 22:41:29 +0000"
+"test/ds/wavelet_matrix/rangefreq.test.cpp": "2023-10-30 22:41:29 +0000"
 }
