@@ -27,10 +27,10 @@ class segment_tree {
     return m.op(accl, accr);
   }
   void mul(int i, value_type v) {
-    exec(i, [=](value_type& e) { e = m.op(e, v); });
+    exec(i, [&](value_type& e) { e = m.op(e, v); });
   }
   void set(int i, value_type v) {
-    exec(i, [=](value_type& e) { e = v; });
+    exec(i, [&](value_type& e) { e = v; });
   }
   template <class F>
   void exec(int i, F f) {

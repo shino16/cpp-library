@@ -1,5 +1,4 @@
 #pragma once
-#include "func/id.hpp"
 
 template <class T, class Cmp = less<>>
 class heap {

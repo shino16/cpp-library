@@ -1,7 +1,6 @@
 #pragma once
 #include "graph.hpp"
 #include "graph/tree/dfs.hpp"
-#include "func/id.hpp"
 
 // add(&par.data, &v.data, v, edge)
 template <class G, class T, class Add, class Remove, class Inv = identity>

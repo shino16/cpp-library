@@ -1,6 +1,5 @@
 #pragma once
 #include "types.hpp"
-#include "func/id.hpp"
 
 // Stable sort
 template <class It, class Key = identity>
