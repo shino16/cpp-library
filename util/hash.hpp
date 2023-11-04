@@ -1,25 +1,7 @@
 #pragma once
 #include "util/rand.hpp"
 
-template <class T, class = void>
-struct simple_hash : hash<T> { };
-
-template <class T>
-struct simple_hash<T, void_t<decltype(tuple_size<T>::value)>> {
-  size_t operator()(const T& x) const {
-    return hash_impl(x, make_index_sequence<tuple_size_v<T>>{});
-  }
- private:
-  template <size_t... Is>
-  static size_t hash_impl(const T& x, index_sequence<Is...>) {
-    size_t res = 0;
-    ((void)(res ^= (res << 16) ^ simple_hash<tuple_element_t<Is, T>>{}(get<Is>(x))),
-     ...);
-    return res;
-  }
-};
-
-uint64_t splitmix64(uint64_t x) {
+[[gnu::const]] uint64_t splitmix64(uint64_t x) {
   // http://xorshift.di.unimi.it/splitmix64.c
   x += 0x9e3779b97f4a7c15;
   x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
@@ -43,6 +25,7 @@ struct anti_hack_hash<T, void_t<decltype(tuple_size<T>::value)>> {
   size_t operator()(const T& x) const {
     return hash_impl(x, make_index_sequence<tuple_size_v<T>>{});
   }
+
  private:
   static auto make_seed() {
     array<uint64_t, tuple_size_v<T>> res;
@@ -52,9 +35,10 @@ struct anti_hack_hash<T, void_t<decltype(tuple_size<T>::value)>> {
   }
   template <size_t... Is>
   static size_t hash_impl(const T& x, index_sequence<Is...>) {
-    static auto seed = make_seed();
     size_t res = 0;
-    ((void)(res = splitmix64(res + get<Is>(x) + get<Is>(seed))), ...);
+    ((void)(res = splitmix64(
+                res + anti_hack_hash<tuple_element_t<Is, T>>{}(get<Is>(x)))),
+     ...);
     return res;
   }
 };

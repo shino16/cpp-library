@@ -8,3 +8,7 @@ uint32_t rand32() {
   x ^= x << 5;
   return x;
 }
+
+uint64_t rand64() {
+  return uint64_t(rand32()) << 32 | rand32();
+}
