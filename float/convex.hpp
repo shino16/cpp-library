@@ -1,6 +1,7 @@
 #pragma once
 #include "prelude.hpp"
 
+// (min f, argmin f)
 template <class F>
 auto convex_min(double l, double r, double e, const F& f)
     -> pair<decltype(f(0.0)), double> {

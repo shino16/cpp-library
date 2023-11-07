@@ -1,4 +1,5 @@
 #pragma once
+#include "arith/sat.hpp"
 #include "prelude.hpp"
 
 vector<bool> sieve(int upto) {
@@ -16,4 +17,12 @@ vector<int> primes(int upto) {
   for (int n = 2; n <= upto; n++)
     if (sieved[n]) ans.push_back(n);
   return ans;
+}
+
+bool is_prime(int n) {
+  if (n == 2) return true;
+  if (n % 2 == 0) return false;
+  for (int d = 3; sat_mul(d, d) <= n; d += 2)
+    if (n % d == 0) return false;
+  return true;
 }

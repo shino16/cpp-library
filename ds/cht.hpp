@@ -1,6 +1,6 @@
 #pragma once
-#include "la/vec.hpp"
 #include "arith/sqrt.hpp"
+#include "la/vec.hpp"
 #include "num/int/bisect.hpp"
 
 template <class T>
@@ -17,7 +17,7 @@ T apply(linear_fn<T> f, T x) {
 template <class T, bool Maximize = false>
 class convex_hull_trick {
  public:
-  convex_hull_trick() : hull({linear_fn<T>{0, sentinel()}}) { }
+  convex_hull_trick() : ready(true), hull({linear_fn<T>{0, sentinel()}}) {}
   template <class It>
   convex_hull_trick(It first, It last) {
     init(first, last);
@@ -38,6 +38,7 @@ class convex_hull_trick {
         hull.pop_back(), edges.pop_back();
       edges.push_back(*it - hull.back()), hull.push_back(*it);
     }
+    ready = true;
   }
   void rebuild() {
     vector<linear_fn<T>> fs(all(hull));
@@ -46,10 +47,11 @@ class convex_hull_trick {
     init(all(fs));
   }
 
-  void add(linear_fn<T> f) { aux.push_back(f); }
-  void add(T a, T b) { aux.emplace_back(a, b); }
+  void add(linear_fn<T> f) { aux.push_back(f), ready = false; }
+  void add(T a, T b) { aux.emplace_back(a, b), ready = false; }
 
   T apply(T x) {
+    assert(ready);
     linear_fn<T> f(1, -x);
     int i = bisect<int>(0, edges.size(), [&](int j) {
       return (det(f, edges[j]) < 0) ^ Maximize;
@@ -60,6 +62,7 @@ class convex_hull_trick {
   }
 
  private:
+  bool ready;
   vector<linear_fn<T>> hull, edges, aux;
   static T sentinel() {
     return floor_sqrt(numeric_limits<T>::max()) * (Maximize ? -1 : 1);
