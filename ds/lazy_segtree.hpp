@@ -47,10 +47,10 @@ class lazy_segment_tree {
     build(trunc(r + size()) - 1);
   }
   void mul(int i, value_type v) {
-    exec(i, [=](value_type& e) { e = m.op(e, v); });
+    exec(i, [&](value_type& e) { e = m.op(e, v); });
   }
   void set(int i, value_type v) {
-    exec(i, [=](value_type& e) { e = v; });
+    exec(i, [&](value_type& e) { e = v; });
   }
   template <class G>
   void exec(int i, G f) {

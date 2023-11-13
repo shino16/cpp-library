@@ -9,8 +9,8 @@ struct fact {
     static vector<T> fact = {T(1)};
     if (fact.size() <= n) {
       int l = fact.size();
-      fact.resize(n + 1);
-      rep2(i, l, n + 1) fact[i] = fact[i - 1] * i;
+      fact.resize(n * 2);
+      rep2(i, l, n * 2) fact[i] = fact[i - 1] * i;
     }
     return fact[n];
   }
@@ -24,8 +24,8 @@ struct inv_fact {
     static vector<T> inv_fact = {T(1)};
     if (inv_fact.size() <= n) {
       int l = inv_fact.size();
-      inv_fact.resize(n + 1);
-      rep2(i, l, n + 1) inv_fact[i] = inv_fact[i - 1] * inverse(i);
+      inv_fact.resize(n * 2);
+      rep2(i, l, n * 2) inv_fact[i] = inv_fact[i - 1] * inverse(i);
     }
     return inv_fact[n];
   }

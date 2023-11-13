@@ -20,6 +20,7 @@ class lca {
     rep(h, height - 1) rep(x, size) data[h + 1][x] = data[h][data[h][x]];
   }
 
+  int par(int v) const { return data[0][v]; }
   int ascend(int v, int d) const {
     rep(h, height) if (d >> h & 1) v = data[h][v];
     return v == size - 1 ? -1 : v;

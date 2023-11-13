@@ -2,7 +2,8 @@
 #include "graph.hpp"
 #include "range.hpp"
 
-template <size_t> struct stdin_reader;
+template <size_t>
+struct stdin_reader;
 
 template <class Weight = void, bool Directed = false, bool OneBased = true>
 class csr_graph {
@@ -44,10 +45,11 @@ class csr_graph {
     for_each(ls[v], rs[v], f);
   }
 
+ public:
+  vector<typename vector<edge_t<csr_graph>>::iterator> ls, rs;
  private:
   int n, m;
   vector<edge_t<csr_graph>> es;
-  vector<typename vector<edge_t<csr_graph>>::iterator> ls, rs;
   template <size_t Size = 1 << 26>
   auto read_e(stdin_reader<Size>& read) {
     using E = conditional_t<is_weighted_v<csr_graph>, tuple<int, int, Weight>,

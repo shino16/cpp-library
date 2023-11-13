@@ -1,12 +1,12 @@
 #define PROBLEM "https://yukicoder.me/problems/3277"
 
 #include "io.hpp"
-#include "ds/segtree.hpp"
+#include "ds/segtree_binsearch.hpp"
 
 int main() {
   int n = in, q = in;
   auto a = in.vec<int>(n);
-  segment_tree seg(all(a), minimum<int>{});
+  segment_tree_binsearch<minimum<int>> seg(all(a));
   while (q--) {
     int op = in, l = in, r = in;
     if (op == 1) {
