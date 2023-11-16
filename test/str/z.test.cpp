@@ -3,8 +3,8 @@
 
 #include "str/z.hpp"
 
-vector<int> occurences(char* s_first, char* s_last, char* p_first, char* p_last,
-                       char sep = '$') {
+vector<int> occurences(char* s_first, char* s_last, char* p_first,
+                       char* p_last, char sep = '$') {
   int n = s_last - s_first, m = p_last - p_first;
   vector<char> s(n + m + 1);
   copy(p_first, p_last, s.begin());
