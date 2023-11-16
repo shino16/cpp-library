@@ -2,8 +2,6 @@
 #include "graph.hpp"
 #include "func/constant.hpp"
 
-enum direction { Left, Right, Up, Down };
-
 template <class Weight = constant<int, 1>, char Wall = '#'>
 class grid_graph {
  public:
@@ -23,7 +21,7 @@ class grid_graph {
   template <class F>
   void adj(int v, F f) const {
     if (data[v] == Wall) return;
-    int d[] = {-1, 1, -w, w};
+    const int d[] = {-1, 1, -w, w};
     rep(i, 4) if (data[v + d[i]] != Wall)
         f(edge_t<grid_graph>{v + d[i], c(data[v + d[i]], i)});
   }

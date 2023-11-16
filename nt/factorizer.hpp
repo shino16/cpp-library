@@ -14,9 +14,11 @@ class factorizer {
   }
 
   int size() const { return lpf.size(); }
-  vector<int> operator()(int n) const {
-    vector<int> res;
-    while (n != 1) res.push_back(lpf[n]), n /= lpf[n];
+  vector<pair<int, int>> operator()(int n) const {
+    vector<pair<int, int>> res;
+    for (; n != 1; n /= lpf[n])
+      if (!res.empty() && res.back().first == lpf[n]) res.back().second++;
+      else res.emplace_back(lpf[n], 1);
     return res;
   }
 

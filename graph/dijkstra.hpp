@@ -12,7 +12,7 @@ vector<weight_t<G>> dijkstra(
   while (s_it != s_last)
     hp.insert(*s_it, weight_t<G>(0)), dist[*s_it++] = weight_t<G>(0);
   while (!hp.empty()) {
-    auto [v, w] = hp.pop();
+    auto [w, v] = hp.pop();
     g.adj(v, [&, v = v](auto&& e) {
       if (dist[e.to] > dist[v] + e.w())
         hp.insert_or_modify(e.to, dist[e.to] = dist[v] + e.w());

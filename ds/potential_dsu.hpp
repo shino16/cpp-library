@@ -12,9 +12,9 @@ class potential_dsu {
   }
   int find(int x) {
     if (par[x] < 0) return x;
-    find(par[x]);
+    int r = find(par[x]);
     f[x] += f[par[x]];
-    return par[x] = par[par[x]];
+    return par[x] = r;
   }
   bool same(int x, int y) { return find(x) == find(y); }
   T phi(int x) { return find(x), f[x]; }
@@ -24,7 +24,7 @@ class potential_dsu {
     d += phi(x), x = find(x);
     d -= phi(y), y = find(y);
     if (x == y) return d != T(0);
-    if (par[x] > par[y]) swap(x, y);
+    if (par[x] > par[y]) swap(x, y), d = -d;
     par[x] += par[y], par[y] = x, f[y] = d;
     cnt--;
     return false;
