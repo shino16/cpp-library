@@ -1,7 +1,5 @@
 #pragma once
 #include "mod/fact.hpp"
-// #include "mod/modint.hpp"
-#include <atcoder/modint>
 
 template <class T = atcoder::modint998244353>
 T binom(int n, int k) {

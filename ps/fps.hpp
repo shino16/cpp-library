@@ -1,4 +1,5 @@
 #pragma once
+#include "mod/modint.hpp"
 #include "mod/inv.hpp"
 #include "mod/sqrt.hpp"
 #include "arith/sat.hpp"
@@ -38,22 +39,32 @@ class formal_power_series : public vector<T> {
   void trunc() {
     while (!this->empty() && this->back() == T(0)) this->pop_back();
   }
-  fps& mul(T c) {
+  fps& operator*=(T c) {
     for (auto& e : *this) e *= c;
     return *this;
   }
-  fps add(const fps& v) && {
+  fps operator*(T c) && { return move(*this *= c); }
+  fps operator*(T c) const& { return fps(*this) * c; }
+  fps mul(T c) && { return move(*this) * c; }
+  fps mul(T c) const& { return *this * c; }
+  fps& operator+=(const fps& v) {
     this->resize(max(size(), v.size()));
     rep(i, v.size()) (*this)[i] += v[i];
-    return move(*this);
+    return *this;
   }
-  fps add(const fps& v) const& { return fps(*this).add(v); }
-  fps sub(const fps& v) && {
+  fps operator+(const fps& v) && { return move(*this += v); }
+  fps operator+(const fps& v) const& { return fps(*this) + v; }
+  fps add(const fps& v) && { return move(*this += v); }
+  fps add(const fps& v) const& { return fps(*this) + v; }
+  fps& operator-=(const fps& v) {
     this->resize(max(size(), v.size()));
     rep(i, v.size()) (*this)[i] -= v[i];
-    return move(*this);
+    return *this;
   }
-  fps sub(const fps& v) const& { return fps(*this).sub(v); }
+  fps operator-(const fps& v) && { return move(*this -= v); }
+  fps operator-(const fps& v) const& { return fps(*this) - v; }
+  fps sub(const fps& v) && { return move(*this -= v); }
+  fps sub(const fps& v) const& { return fps(*this) - v; }
   fps conv(fps v, int deg = -1) && {
     if (~deg) this->resize(min(size(), deg)), v.resize(min(v.size(), deg));
     auto f = convolution(into_vec(), v.into_vec());

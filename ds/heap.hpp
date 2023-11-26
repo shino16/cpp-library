@@ -10,18 +10,6 @@ class heap {
   heap(It first, It last, Cmp cmp = Cmp()) : cmp(cmp) {
     init(first, last);
   }
-  // moves out from [first, last)
-  template <class It>
-  void init(It first, It last) {
-    data.resize(1), pos.clear();
-    int n = distance(first, last);
-    data.reserve(n), pos.resize(n);
-    for (auto it = first; it != last; it++)
-      data.emplace_back(data.size(), move(*it));
-    iota(all(pos), 1);
-    repr2(v, 1, n / 2 + 1) merge(v);
-  }
-
   bool empty() const { return data.size() == 1; }
   int size() const { return data.size() - 1; }
   void reserve(int n) { pos.resize(max<size_t>(pos.size(), n), -1); }
@@ -53,6 +41,17 @@ class heap {
   Cmp cmp;
   vector<pair<T, int>> data;
   vector<int> pos;
+  // moves out from [first, last)
+  template <class It>
+  void init(It first, It last) {
+    data.resize(1), pos.clear();
+    int n = distance(first, last);
+    data.reserve(n), pos.resize(n);
+    for (auto it = first; it != last; it++)
+      data.emplace_back(data.size(), move(*it));
+    iota(all(pos), 1);
+    repr2(v, 1, n / 2 + 1) merge(v);
+  }
   void merge(int v) {
     if (v * 2 >= data.size()) return;
     int l = v * 2, r = v * 2 + 1;

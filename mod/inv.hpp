@@ -1,17 +1,13 @@
 #pragma once
 #include "prelude.hpp"
+// #include "mod/modint.hpp"
+#include <atcoder/modint>
 
-struct inverse {
-  int n;
-  inverse(int n) : n(n) { }
-  template <class T>
-  operator T() const {
-    static vector<T> inv = {T(0), T(1)};
-    if (inv.size() <= n) {
-      int l = inv.size();
-      inv.resize(n + 1);
-      rep2(i, l, n + 1) inv[i] = -inv[T::mod() % i] * (T::mod() / i);
-    }
-    return inv[n];
+template <class T = atcoder::modint998244353>
+T inverse(int n) {
+  static vector<T> v = {T(0), T(1)};
+  while (v.size() <= n) {
+    v.push_back(-v[T::mod() % v.size()] * (T::mod() / v.size()));
   }
-};
+  return v[n];
+}

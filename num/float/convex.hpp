@@ -1,7 +1,7 @@
 #pragma once
 #include "prelude.hpp"
 
-// returns (min f, argmin f)
+// Returns (min f, argmin f)
 template <class F>
 auto convex_min(double l, double r, double e, F f) {
   const double PHI = 1.6180339887498948;
@@ -23,5 +23,5 @@ auto convex_min(double l, double r, double e, F f) {
       fx = f(x);
     }
   }
-  return make_pair(f(x), x);
+  return make_pair(fx, x);
 }
