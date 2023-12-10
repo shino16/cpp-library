@@ -49,6 +49,7 @@ struct graph_trait {
   void adj(int v, F f) const {
     g.adj(v, f);
   }
+  decltype(auto) operator[](int v) const { return g[v]; }
 };
 
 template <class T>

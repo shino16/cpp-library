@@ -9,8 +9,8 @@
 #include <intrin.h>
 #endif
 
-#include <atcoder/internal_math>
-#include <atcoder/internal_type_traits>
+#include "atcoder/internal_math"
+#include "atcoder/internal_type_traits"
 
 namespace atcoder {
 
@@ -131,6 +131,9 @@ struct static_modint : internal::static_modint_base {
     constexpr friend bool operator!=(const mint& lhs, const mint& rhs) {
         return lhs._v != rhs._v;
     }
+    constexpr friend bool operator<(const mint& lhs, const mint& rhs) {
+        return lhs._v < rhs._v;
+    }
 
   private:
     unsigned int _v;
@@ -240,6 +243,9 @@ template <int id> struct dynamic_modint : internal::modint_base {
     }
     friend bool operator!=(const mint& lhs, const mint& rhs) {
         return lhs._v != rhs._v;
+    }
+    friend bool operator<(const mint& lhs, const mint& rhs) {
+        return lhs._v < rhs._v;
     }
 
   private:
