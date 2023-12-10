@@ -1,7 +1,6 @@
 #pragma once
 #ifndef LOCAL
 #pragma GCC optimize("O3")
-// #pragma GCC target("avx2")
 #endif
 #include <bits/stdc++.h>
 using namespace std;
