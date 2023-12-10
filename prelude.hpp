@@ -8,10 +8,6 @@ using namespace std;
 using ll = long long;
 using vi = vector<int>;
 using vll = vector<ll>;
-#ifdef __cpp_lib_ranges
-namespace R = std::ranges;
-namespace V = std::views;
-#endif
 #define rep2(i, m, n) for (auto i = (m); i < (n); i++)
 #define rep(i, n) rep2(i, 0, n)
 #define repr2(i, m, n) for (auto i = (n); i-- > (m);)
