@@ -22,10 +22,12 @@ class w_ary_tree {
   }
   bool contains(T x) const { return ptr && ptr[x / V].contains(x % V); }
   T min() const {
+    if (!mask) return -1;
     T i = ctz(mask);
     return (i * V) | ptr[i].min();
   }
   T max() const {
+    if (!mask) return -1;
     T i = 63 - clz(mask);
     return (i * V) | ptr[i].max();
   }
@@ -78,8 +80,8 @@ class w_ary_tree<T0, U, enable_if_t<U <= 64>> {
     return ret;
   }
   bool contains(T x) const { return mask >> x & 1; }
-  T min() const { return ctz(mask); }
-  T max() const { return 63 - clz(mask); }
+  T min() const { return mask ? ctz(mask) : -1; }
+  T max() const { return mask ? 63 - clz(mask) : -1; }
   // max s s.t. s < x
   T pred(T x) const {
     uint64_t mask2 = mask & ~(~uint64_t(0) << x);
