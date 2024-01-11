@@ -14,4 +14,6 @@ int main() {
     assert(0 <= r && r < abs(b[i]));
     assert((a[i] - r) % b[i] == 0);
   }
+
+  out("Hello World");
 }
