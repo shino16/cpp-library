@@ -1,4 +1,4 @@
-#define PROBLEM "https://www.hackerrank.com/contests/world-codesprint-5/challenges/mining/problem"
+// competitive-verifier: PROBLEM https://www.hackerrank.com/contests/world-codesprint-5/challenges/mining/problem
 
 #include "dp/knuth_partition.hpp"
 

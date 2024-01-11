@@ -1,4 +1,4 @@
-#define PROBLEM "https://yukicoder.me/problems/3277"
+// competitive-verifier: PROBLEM https://yukicoder.me/problems/3277
 
 #include "io.hpp"
 #include "ds/segtree_binsearch.hpp"

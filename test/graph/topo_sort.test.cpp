@@ -1,5 +1,4 @@
-#define PROBLEM \
-  "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_4_A"
+// competitive-verifier: PROBLEM https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_4_A
 
 #include "graph/topo_sort.hpp"
 

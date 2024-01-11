@@ -1,5 +1,4 @@
-#define PROBLEM \
-  "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_B"
+// competitive-verifier: PROBLEM https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_B
 
 #include "graph/tree/rerooting.hpp"
 

@@ -1,4 +1,4 @@
-#define PROBLEM "https://www.hackerrank.com/contests/ioi-2014-practice-contest-2/challenges/guardians-lunatics-ioi14"
+// competitive-verifier: PROBLEM https://www.hackerrank.com/contests/ioi-2014-practice-contest-2/challenges/guardians-lunatics-ioi14
 
 #include "dp/d_and_c.hpp"
 

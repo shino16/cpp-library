@@ -1,5 +1,4 @@
-#define PROBLEM \
-  "https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0570"
+// competitive-verifier: PROBLEM https://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0570
 
 #include "dfa/multiple_of.hpp"
 #include "mod/modint.hpp"

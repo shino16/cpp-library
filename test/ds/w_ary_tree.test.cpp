@@ -1,4 +1,4 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/predecessor_problem"
+// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/predecessor_problem
 
 #include "ds/w_ary_tree.hpp"
 

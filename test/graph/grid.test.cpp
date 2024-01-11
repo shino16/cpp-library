@@ -1,4 +1,4 @@
-#define PROBLEM "https://yukicoder.me/problems/no/1638"
+// competitive-verifier: PROBLEM https://yukicoder.me/problems/no/1638
 
 #include "graph/grid.hpp"
 #include "graph/dijkstra.hpp"

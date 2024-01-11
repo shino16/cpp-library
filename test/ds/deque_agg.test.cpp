@@ -1,4 +1,4 @@
-#define PROBLEM "https://judge.yosupo.jp/problem/queue_operate_all_composite"
+// competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/queue_operate_all_composite
 
 #include "ds/deque_agg.hpp"
 #include <mod/modint.hpp>
