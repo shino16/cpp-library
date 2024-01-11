@@ -3,6 +3,7 @@
 
 template <class T>
 T gcd(T u, T v) {
+  u = abs(u), v = abs(v);
   if (u == 0) return v;
   if (v == 0) return u;
   int i = ctz(u); u >>= i;

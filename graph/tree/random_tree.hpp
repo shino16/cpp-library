@@ -26,6 +26,6 @@ vector<vector<int>> random_tree(int n, const vector<int>& code) {
 
 vector<vector<int>> random_tree(int n) {
   vector<int> code(n - 2);
-  rep(i, n) code[i] = rand32() % n;
+  rep(i, n - 2) code[i] = rand32() % n;
   return random_tree(n, code);
 }

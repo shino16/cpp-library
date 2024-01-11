@@ -22,6 +22,8 @@ class compress {
   int upper_bound(const T& x) const {
     return upper_bound(data.begin(), data.end(), x) - data.begin() - 1;
   }
+  auto begin() const { return data.begin(); }
+  auto end() const { return data.end(); }
 
  private:
   vector<T> data;
