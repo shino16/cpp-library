@@ -4,9 +4,12 @@
 #include "mod/sqrt.hpp"
 #include "arith/sat.hpp"
 #include "ps/fft.hpp"
-#include "ps/exp.hpp"
 #include "ps/inv.hpp"
-#include "ps/bostan_mori.hpp"
+
+template <class T>
+vector<T> exp(const vector<T>& p, int deg = -1);
+template <class T>
+T bostan_mori(vector<T> a, vector<T> b, ll n);
 
 template <
     class T,
@@ -21,7 +24,7 @@ class formal_power_series : public vector<T> {
   using vector<T>::vector;
   formal_power_series(vector<T> v) : vector<T>(move(v)) { }
   formal_power_series(sparse p) : vector<T>() {
-    resize(p.back().first + 1);
+    this->resize(p.back().first + 1);
     for (auto [k, c] : p) (*this)[k] += c;
   }
   static fps one() { return fps({T(1)}); }

@@ -97,8 +97,8 @@ const string digits = "0123456789";
 template <class T, class X, class Iter = string::const_iterator>
 T count(const X &dfa, int n, Iter alphabets_f = begin(digits),
         Iter alphabets_l = end(digits)) {
-  hash_map<typename X::state, T> prv, nxt;
-  // map<typename X::state, T> prv, nxt;
+  // hash_map<typename X::state, T> prv, nxt;
+  map<typename X::state, T> prv, nxt;
   nxt[dfa.init()] = T(1);
   rep(i, n) {
     prv = move(nxt);

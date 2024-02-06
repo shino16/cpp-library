@@ -11,6 +11,6 @@ T fact(int n) {
 template <class T = atcoder::modint998244353>
 T inv_fact(int n) {
   static vector<T> v = {T(1)};
-  while (v.size() <= n) v.push_back(v.back() * inverse(v.size()));
+  while (v.size() <= n) v.push_back(v.back() * inverse<T>(v.size()));
   return v[n];
 }

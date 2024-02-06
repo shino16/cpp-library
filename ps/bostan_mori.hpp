@@ -1,8 +1,28 @@
 #pragma once
-#include "ps/fft.hpp"
+#include "ps/fps.hpp"
+
+auto div(auto a, auto b) {
+  int n = a.size() - b.size() + 1;
+  reverse(all(a));
+  a.resize(n);
+  reverse(all(b));
+  auto c = a.conv(b.inv(n));
+  c.resize(n);
+  reverse(all(c));
+  return c;
+}
 
 template <class T>
-T bostan_mori(vector<T> a, vector<T> b, ll n) {
+T bostan_mori(formal_power_series<T> a, formal_power_series<T> b, ll n) {
+  a.trunc(), b.trunc();
+  T ofs = 0;
+  if (a.size() >= b.size()) {
+    auto c = div(a, b);
+    if (n < c.size()) ofs += c[n];
+    a -= move(c).conv(b);
+    a.resize(b.size());
+    a.trunc();
+  }
   int k = max(2, 1 + atcoder::internal::ceil_pow2(max(a.size(), b.size())));
   int d = 1 << k, half = d / 2;
   a.resize(d), b.resize(d);
@@ -33,12 +53,20 @@ T bostan_mori(vector<T> a, vector<T> b, ll n) {
       rep(i, half) a[i] = (a[i << 1] - a[i << 1 | 1]) * y[i];
     else
       rep(i, half) a[i] = a[i << 1] + a[i << 1 | 1];
-    if (n == 1) {
-      return accumulate(a.begin(), a.begin() + half, T(0)) / (c * d);
-    }
-    dbl(a);
-    rep(i, half) b[i] = b[i << 1] * b[i << 1 | 1];
-    dbl(b);
     n >>= 1, c *= 2;
+    rep(i, half) b[i] = b[i << 1] * b[i << 1 | 1];
+    if (n < half) break;
+    dbl(a);
+    dbl(b);
   }
+  a.resize(half);
+  b.resize(half);
+  ifft(a), ifft(b);
+  return convolution(move(a), inv(move(b)))[n] / c + ofs;
+}
+
+template <class T>
+T bostan_mori(vector<T> a, vector<T> b, ll n) {
+  return bostan_mori(
+      formal_power_series<T>(move(a)), formal_power_series<T>(move(b)), n);
 }

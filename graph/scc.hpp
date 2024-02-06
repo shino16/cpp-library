@@ -31,6 +31,8 @@ class scc {
   }
   // which component v belongs to
   int operator()(int v) const { return id_[v]; }
+  int group_of(int v) const { return id_[v]; }
+  int n_groups() const { return n_cpnts; }
 
   vector<vector<int>> groups() const {
     vector<vector<int>> res(n_cpnts);

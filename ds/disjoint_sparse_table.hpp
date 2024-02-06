@@ -6,6 +6,7 @@ template <class M>
 class disjoint_sparse_table {
  public:
   using value_type = typename M::type;
+  disjoint_sparse_table() = default;
   template <class It>
   disjoint_sparse_table(It a, It last, M m = M()) : m(m) {
     int n = last - a;
