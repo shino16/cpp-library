@@ -1,7 +1,7 @@
 #pragma once
-#ifndef LOCAL
-#pragma GCC optimize("O3")
-#endif
+// #ifndef LOCAL
+// #pragma GCC optimize("O3")
+// #endif
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
