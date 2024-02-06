@@ -1,7 +1,8 @@
 // competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/exp_of_formal_power_series
 
-#include "ps/fps.hpp"
 #include "io.hpp"
+#include "ps/fps.hpp"
+#include "ps/exp.hpp"
 #include "mod/modint.hpp"
 using mint = atcoder::modint998244353;
 using fps = formal_power_series<mint>;
