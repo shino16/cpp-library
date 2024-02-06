@@ -3,7 +3,7 @@
 #include "mod/inv.hpp"
 
 template <class T>
-vector<T> exp(const vector<T>& p, int deg = -1) {
+vector<T> exp(const vector<T>& p, int deg) {
   if (p.empty()) return vector<T>{T(1)};
   assert(p[0] == 0);
   if (deg == -1) deg = p.size();

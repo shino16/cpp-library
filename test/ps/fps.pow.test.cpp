@@ -3,6 +3,7 @@
 #include "mod/modint.hpp"
 #include "io.hpp"
 #include "ps/fps.hpp"
+#include "ps/exp.hpp"
 using mint = atcoder::modint998244353;
 using fps = formal_power_series<mint>;
 
