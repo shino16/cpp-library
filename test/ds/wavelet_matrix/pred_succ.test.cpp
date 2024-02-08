@@ -11,7 +11,7 @@ int main() {
   scanf("%d", &q);
   const int ofs = 1000000;
   rep(i, n) a[i] += ofs;
-  wavelet_matrix<2000002> wm(a, a + n);
+  wavelet_matrix<int, 2000002> wm(a, a + n);
   while (q--) {
     int l, r, d;
     scanf("%d%d%d", &l, &r, &d);

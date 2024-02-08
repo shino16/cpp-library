@@ -15,7 +15,7 @@ int main() {
   rep(i, n) a[i] = fy(y[ix[i]]);
   sort(x, x+n);
 
-  wavelet_matrix<5001> wm(a, a+n);
+  wavelet_matrix<int, 5001> wm(a, a+n);
   while (q--) {
     int l, u, r, d; scanf("%d%d%d%d", &l, &u, &r, &d);
     r++, d++;

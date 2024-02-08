@@ -4,14 +4,18 @@
 template <class T>
 class compress {
  public:
-  compress(vector<T> v = {}) : data(move(v)) {
+  compress(vector<T> v = {}, bool unique = true) : data(move(v)) {
     sort(data.begin(), data.end());
-    data.erase(unique(data.begin(), data.end()), data.end());
+    if (unique) data.erase(unique(data.begin(), data.end()), data.end());
   }
   template <class It>
   compress(It f, It l) : compress(vector<T>(f, l)) {}
   int size() const { return data.size(); }
-  int operator()(const T& x) const { return lower_bound(x); }
+  int operator()(const T& x) const {
+    int i = lower_bound(x);
+    assert(data[i] == x);
+    return i;
+  }
   bool contains(const T& x) const {
     return binary_search(data.begin(), data.end(), x);
   }

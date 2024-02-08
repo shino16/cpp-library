@@ -21,12 +21,12 @@ class doubling {
   int operator()(ll power, int x) const { return apply(power, x); }
   // min i s.t. !p(apply(i, x))
   template <class P>
-  int partition_point(int x, P p) const {
+  ll partition_point(int x, P p) const {
     if (!p(x)) return 0;
-    int i = 0;
+    ll i = 0;
     repr(h, height)
-      if (p(data[h][x])) i |= 1 << h, x = data[h][x];
-    return i + 1;
+      if (p(data[h][x])) i |= 1LL << h, x = data[h][x];
+    return i + (i != LLONG_MAX);
   }
 
  private:

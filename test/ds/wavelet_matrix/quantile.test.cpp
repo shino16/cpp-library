@@ -8,7 +8,7 @@ int main() {
   scanf("%d%d", &n, &q);
   rep(i, n) scanf("%d", a+i);
 
-  wavelet_matrix<1000000001> wm(a, a+n);
+  wavelet_matrix<int, 1000000001> wm(a, a+n);
   while (q--) {
     int l, r, k; scanf("%d%d%d", &l, &r, &k);
     printf("%d\n", wm.rquantile(l, r, k));
