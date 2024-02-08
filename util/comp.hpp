@@ -4,9 +4,9 @@
 template <class T>
 class compress {
  public:
-  compress(vector<T> v = {}, bool unique = true) : data(move(v)) {
+  compress(vector<T> v = {}, bool uniq = true) : data(move(v)) {
     sort(data.begin(), data.end());
-    if (unique) data.erase(unique(data.begin(), data.end()), data.end());
+    if (uniq) data.erase(unique(data.begin(), data.end()), data.end());
   }
   template <class It>
   compress(It f, It l) : compress(vector<T>(f, l)) {}
