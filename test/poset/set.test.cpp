@@ -1,7 +1,7 @@
 // competitive-verifier: PROBLEM https://judge.yosupo.jp/problem/bitwise_and_convolution
 
 #include "io.hpp"
-#include "set_ps/zeta.hpp"
+#include "poset/set.hpp"
 #include "mod/modint.hpp"
 using mint = atcoder::modint998244353;
 
