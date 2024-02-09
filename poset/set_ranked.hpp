@@ -60,7 +60,7 @@ void ranked_pointwise_square(vector<array<T, MaxN + 1>>& a) {
   }
 }
 
-template <class T, int MaxN = 20>
+template <class T, int MaxN>
 vector<T> subset_convolution_square(const vector<T>& a) {
   auto ra = add_rank<T, MaxN>(a);
   ranked_zeta<T, MaxN>(ra);
@@ -69,7 +69,7 @@ vector<T> subset_convolution_square(const vector<T>& a) {
   return erase_rank<T, MaxN>(ra);
 }
 
-template <class T, int MaxN = 20>
+template <class T, int MaxN>
 vector<T> subset_convolution(const vector<T>& a, const vector<T>& b) {
   if (a == b) return subset_convolution_square<T, MaxN>(a);
   auto ra = add_rank<T, MaxN>(a), rb = add_rank<T, MaxN>(b);
