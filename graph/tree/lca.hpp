@@ -9,13 +9,13 @@ class lca {
       : size(graph_trait<G>(g).size() + 1),
         height(ilog2(size) + 1),
         data(height, vector<int>(size)),
-        depth(size) {
+        dep(size) {
     int sentinel = size - 1;
     data[0][r] = data[0][sentinel] = sentinel;
-    depth[r] = 1;
+    dep[r] = 1;
     dfs(g, r, [&](auto&& e, int p) {
       data[0][e.to] = p;
-      depth[e.to] = depth[p] + 1;
+      dep[e.to] = dep[p] + 1;
     });
     rep(h, height - 1) rep(x, size) data[h + 1][x] = data[h][data[h][x]];
   }
@@ -26,18 +26,19 @@ class lca {
     return v == size - 1 ? -1 : v;
   }
   int operator()(int u, int v) const {
-    if (depth[u] < depth[v])
-      v = ascend(v, depth[v] - depth[u]);
-    else if (depth[u] > depth[v])
-      u = ascend(u, depth[u] - depth[v]);
+    if (dep[u] < dep[v])
+      v = ascend(v, dep[v] - dep[u]);
+    else if (dep[u] > dep[v])
+      u = ascend(u, dep[u] - dep[v]);
     repr(h, height) {
       if (data[h][u] != data[h][v]) u = data[h][u], v = data[h][v];
     }
     return u == v ? u : data[0][u];
   }
+  int depth(int v) const { return dep[v]; }
 
  private:
   int size, height;
   vector<vector<int>> data;
-  vector<int> depth;
+  vector<int> dep;
 };

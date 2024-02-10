@@ -179,18 +179,22 @@ void butterfly_inv(vector<mint>& a) {
   butterfly_inv(a.begin(), a.end());
 }
 
-template <class mint, internal::is_static_modint_t<mint>* = nullptr>
-std::vector<mint> convolution_naive(
-    const std::vector<mint>& a, const std::vector<mint>& b) {
+template <class T>
+std::vector<T> convolution_naive(
+    const std::vector<T>& a, const std::vector<T>& b) {
   int n = int(a.size()), m = int(b.size());
-  std::vector<mint> ans(n + m - 1);
+  std::vector<T> ans(n + m - 1);
   if (n < m) {
     for (int j = 0; j < m; j++) {
-      for (int i = 0; i < n; i++) { ans[i + j] += a[i] * b[j]; }
+      for (int i = 0; i < n; i++) {
+        ans[i + j] += a[i] * b[j];
+      }
     }
   } else {
     for (int i = 0; i < n; i++) {
-      for (int j = 0; j < m; j++) { ans[i + j] += a[i] * b[j]; }
+      for (int j = 0; j < m; j++) {
+        ans[i + j] += a[i] * b[j];
+      }
     }
   }
   return ans;
@@ -200,11 +204,14 @@ template <class mint, internal::is_static_modint_t<mint>* = nullptr>
 std::vector<mint> convolution_fft(std::vector<mint> a, std::vector<mint> b) {
   int n = int(a.size()), m = int(b.size());
   int z = 1 << internal::ceil_pow2(n + m - 1);
+  assert((mint::mod() - 1) % z == 0);
   a.resize(z);
   internal::butterfly(a);
   b.resize(z);
   internal::butterfly(b);
-  for (int i = 0; i < z; i++) { a[i] *= b[i]; }
+  for (int i = 0; i < z; i++) {
+    a[i] *= b[i];
+  }
   internal::butterfly_inv(a);
   a.resize(n + m - 1);
   mint iz = mint(z).inv();
@@ -240,11 +247,53 @@ std::vector<T> convolution(const std::vector<T>& a, const std::vector<T>& b) {
 
   using mint = static_modint<mod>;
   std::vector<mint> a2(n), b2(m);
-  for (int i = 0; i < n; i++) { a2[i] = mint(a[i]); }
-  for (int i = 0; i < m; i++) { b2[i] = mint(b[i]); }
+  for (int i = 0; i < n; i++) {
+    a2[i] = mint(a[i]);
+  }
+  for (int i = 0; i < m; i++) {
+    b2[i] = mint(b[i]);
+  }
   auto c2 = convolution(move(a2), move(b2));
   std::vector<T> c(n + m - 1);
-  for (int i = 0; i < n + m - 1; i++) { c[i] = c2[i].val(); }
+  for (int i = 0; i < n + m - 1; i++) {
+    c[i] = c2[i].val();
+  }
+  return c;
+}
+
+template <class mint>
+std::vector<mint> convolution_garner(
+    const std::vector<mint>& a, const std::vector<mint>& b) {
+  int n = int(a.size()), m = int(b.size());
+  if (!n || !m) return {};
+  if (std::min(n, m) <= 200) return internal::convolution_naive(a, b);
+
+  static constexpr ll MOD = mint::mod();
+
+  static constexpr ll MOD1 = 469762049;
+  static constexpr ll MOD2 = 167772161;
+  static constexpr ll MOD3 = 754974721;
+  static constexpr ll MOD12 = MOD1 * MOD2 % MOD;
+
+  static constexpr ll r12 = internal::inv_gcd(MOD1, MOD2).second;
+  static constexpr ll r23 = internal::inv_gcd(MOD2, MOD3).second;
+  static constexpr ll r123 = internal::inv_gcd(MOD1 * MOD2, MOD3).second;
+
+  vector<int> ai(n), bi(m);
+  rep(i, n) ai[i] = a[i].val();
+  rep(i, m) bi[i] = b[i].val();
+  auto c1 = convolution<MOD1>(ai, bi);
+  auto c2 = convolution<MOD2>(ai, bi);
+  auto c3 = convolution<MOD3>(ai, bi);
+
+  std::vector<mint> c(n + m - 1);
+  for (int i = 0; i < n + m - 1; i++) {
+    long long x1 = c1[i];
+    long long x2 = internal::safe_mod((c2[i] - x1) * r12, MOD2);
+    long long x3 = internal::safe_mod((c3[i] - x1) * r123 - x2 * r23, MOD3);
+    c[i] = x1 + x2 * MOD1 + x3 * MOD12;
+  }
+
   return c;
 }
 
@@ -252,6 +301,7 @@ std::vector<long long> convolution_ll(
     const std::vector<long long>& a, const std::vector<long long>& b) {
   int n = int(a.size()), m = int(b.size());
   if (!n || !m) return {};
+  if (std::min(n, m) <= 200) return internal::convolution_naive(a, b);
 
   static constexpr unsigned long long MOD1 = 754974721;  // 2^24
   static constexpr unsigned long long MOD2 = 167772161;  // 2^25
