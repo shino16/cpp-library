@@ -135,7 +135,6 @@ void butterfly_inv(It a, It last) {
           a[i + offset + p] =
               (unsigned long long)(mint::mod() + l.val() - r.val()) *
               irot.val();
-          ;
         }
         if (s + 1 != (1 << (len - 1)))
           irot *= info.irate2[bsf(~(unsigned int)(s))];

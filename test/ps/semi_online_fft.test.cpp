@@ -10,7 +10,7 @@ int main() {
   auto a = in.vec<mint>(n);
   auto b = in.vi(m);
   semi_online_fft<mint> of(a);
-  rep(i, m) of.add(b[i]);
+  rep(i, m) of.push(b[i]);
   auto c = of.finalize();
   c.resize(n + m - 1);
   out(c);

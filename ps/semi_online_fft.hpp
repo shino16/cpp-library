@@ -15,18 +15,19 @@ struct semi_online_fft {
   const T& operator[](int i) const { return c[i]; }
   const vector<T>& get() const& { return c; }
   const vector<T>& finalize() {
-    while (b.size() & (b.size() - 1)) add(0);
-    while (b.size() < a.size() / 2) add(0);
+    while (b.size() & (b.size() - 1)) push(0);
+    while (b.size() < a.size() / 2) push(0);
     c.pop_back();
     return c;
   }
-  void add(T bi) {
+  T push(T bi) {
     b.push_back(bi);
     if (b.size() >= a.size()) a.resize(a.size() * 2), c.resize(c.size() * 2);
     c[b.size() - 1] += a[0] * bi;
     int n = b.size();
     int max_m = n & -n;
     for (int m = 1; m <= max_m && m <= n; m *= 2) calc(m, m * 2, n - m, n);
+    return c[b.size() - 1];
   }
 
  private:

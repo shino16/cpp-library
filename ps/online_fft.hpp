@@ -9,11 +9,11 @@ struct online_fft {
   const T& operator[](int i) const { return c[i]; }
   const vector<T>& get() const& { return c; }
   const vector<T>& finalize() {
-    while (a.size() & (a.size() + 1)) add(0, 0);
+    while (a.size() & (a.size() + 1)) push(0, 0);
     c.pop_back();
     return c;
   }
-  T add(T ai, T bi) {
+  T push(T ai, T bi) {
     a.push_back(ai);
     b.push_back(bi);
     c.push_back(0);

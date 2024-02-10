@@ -10,7 +10,7 @@ int main() {
   auto a = in.vi(n);
   auto b = in.vi(m);
   online_fft<mint> of;
-  rep(i, max(n, m)) of.add(i < n ? a[i] : 0, i < m ? b[i] : 0);
+  rep(i, max(n, m)) of.push(i < n ? a[i] : 0, i < m ? b[i] : 0);
   auto c = of.finalize();
   c.resize(n + m - 1);
   out(c);
