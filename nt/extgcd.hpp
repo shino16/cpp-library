@@ -15,6 +15,6 @@ tuple<T, T, T> extgcd(T a0, T b0) {
   }
   if (a < 0) a = -a, x = -x;
   if (x < 0) x += abs(b0) / a;
-  T y = (a - a0 * x) / b0;
+  T y = b0 ? (a - (__int128)a0 * x) / b0 : 0;
   return {a, x, y};
 }

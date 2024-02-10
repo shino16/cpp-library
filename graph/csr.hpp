@@ -5,26 +5,34 @@
 template <size_t>
 struct stdin_reader;
 
-template <class Weight = void, bool Directed = false, bool OneBased = true>
+template <class Weight = void>
 class csr_graph {
+ private:
+  struct directed_t {};
+
  public:
   using weight_type = Weight;
 
   csr_graph() = default;
   template <class It>
   csr_graph(int n, It e, It e_last) : n(n), m(distance(e, e_last)) {
-    init(e, e_last);
+    init<false>(e, e_last);
   }
   template <size_t Size = 1 << 26>
   csr_graph(int n, int m, stdin_reader<Size>& read) : n(n), m(m) {
     auto e = read_e(read);
-    init(all(e));
+    init<false>(all(e));
+  }
+
+  template <class It>
+  static csr_graph directed(int n, It e, It e_last) {
+    return csr_graph(directed_t{}, n, e, e_last);
   }
   template <size_t Size = 1 << 26>
-  csr_graph(stdin_reader<Size>& read) : n(read), m(read) {
-    auto e = read_e(read);
-    init(all(e));
+  static csr_graph directed(int n, int m, stdin_reader<Size>& read) {
+    return csr_graph(directed_t{}, n, m, read);
   }
+
   template <size_t Size = 1 << 26>
   static csr_graph tree(int n, stdin_reader<Size>& read) {
     return csr_graph(n, n - 1, read);
@@ -45,12 +53,21 @@ class csr_graph {
     for_each(ls[v], rs[v], f);
   }
 
- public:
-  vector<typename vector<edge_t<csr_graph>>::iterator> ls, rs;
  private:
+  template <class It>
+  csr_graph(directed_t, int n, It e, It e_last) : n(n), m(distance(e, e_last)) {
+    init<true>(e, e_last);
+  }
+  template <size_t Size = 1 << 26>
+  csr_graph(directed_t, int n, int m, stdin_reader<Size>& read) : n(n), m(m) {
+    auto e = read_e(read);
+    init<true>(all(e));
+  }
+
+  vector<typename vector<edge_t<csr_graph>>::iterator> ls, rs;
   int n, m;
   vector<edge_t<csr_graph>> es;
-  template <size_t Size = 1 << 26>
+  template <bool OneBased = true, size_t Size = 1 << 26>
   auto read_e(stdin_reader<Size>& read) {
     using E = conditional_t<is_weighted_v<csr_graph>, tuple<int, int, Weight>,
                             pair<int, int>>;
@@ -61,7 +78,7 @@ class csr_graph {
     }
     return res;
   }
-  template <class It>
+  template <bool Directed, class It>
   void init(It e, It e_last) {
     if (!Directed) m *= 2;
     es.resize(m);

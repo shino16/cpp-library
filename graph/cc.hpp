@@ -3,10 +3,10 @@
 
 // graph: bidirectional
 template <class G, class weight_type = typename graph_trait<G>::weight_type>
-vector<pair<csr_graph<weight_type, true>, vector<int>>> components(
+vector<pair<csr_graph<weight_type>, vector<int>>> components(
     const G& graph) {
   graph_trait<G> g{graph};
-  vector<pair<csr_graph<weight_type, true>, vector<int>>> res;
+  vector<pair<csr_graph<weight_type>, vector<int>>> res;
   vector<int> pi(g.size(), -1);
   using E = conditional_t<
       is_weighted_v<G>, tuple<int, int, weight_t<G>>, pair<int, int>>;
@@ -26,7 +26,7 @@ vector<pair<csr_graph<weight_type, true>, vector<int>>> components(
     };
     dfs(dfs, s);
     int n = q.size();
-    res.emplace_back(csr_graph<weight_type, true>(n, all(es)), move(q));
+    res.emplace_back(csr_graph<weight_type>::directed(n, all(es)), move(q));
   }
   return res;
 }
