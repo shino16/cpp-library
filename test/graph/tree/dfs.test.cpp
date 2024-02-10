@@ -7,7 +7,7 @@
 int main() {
   int n = in;
   auto es = in.vec<tuple<int, int, ll>>(n-1);
-  auto G = csr_graph<ll>(in, all(es));
+  auto G = csr_graph<ll>(n, all(es));
   vector<ll> d(n);
   dfs(G, 0, [&](auto e, int p) { d[e.to] = d[p] + e.w(); });
   int s = max_element(all(d)) - d.begin();
