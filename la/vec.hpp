@@ -71,3 +71,15 @@ template <class T, enable_if_t<tuple_size_v<T> == 2>* = nullptr>
 auto det(const T& a, const T& b) {
   return get<0>(a) * get<1>(b) - get<1>(a) * get<0>(b);
 }
+
+// Returns k s.t. a == kb
+// k=inf if b == 0
+template <class T>
+double factor(const T& a, const T& b) {
+  double res = numeric_limits<double>::infinity();
+  assert(dot(a, b) == 0);
+  zip_with(a, b, [&](auto&&x, auto&& y) {
+    if (y) res = x / y;
+  });
+  return res;
+}
