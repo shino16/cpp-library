@@ -35,6 +35,7 @@ vector<T> exp(const vector<T>& p, int deg) {
     rep(i, m * 2) q[i] = gfft[i] * h[i];
     ifft(q);
     h.assign(p.begin() + m, p.begin() + min((int)p.size(), m * 2));
+    h.resize(m, 0);
     repr(i, m) h[i] -= q[i] * im2 * inverse(i + m);
     fft(h, m * 2);
     rep(i, m * 2) q[i] = ffft[i] * h[i];

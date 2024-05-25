@@ -54,9 +54,9 @@ class lazy_segment_tree {
   }
   template <class G>
   void exec(int i, G f) {
-    flush(trunc(i + size()));
+    flush(i + size());
     f(data[i + size()]);
-    build(trunc(i + size()));
+    build(i + size());
   }
 
  private:

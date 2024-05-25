@@ -29,10 +29,17 @@ void dfs_bottom_up(const G& graph, int s, F&& f) {
 }
 
 // f(edge, par)
+template <class G, class Fin, class Fout>
+void dfs_ord(const G& graph, int s, Fin&& fin, Fout&& fout) {
+  fin(s, -1);
+  dfs(graph, s, [&](int v, int p) { fin(v, p); }, [&](int v, int p) { fout(v, p); });
+  fout(s, -1);
+}
+
+// f(edge, par)
 template <class G, class F>
 void dfs_ord(const G& graph, int s, F&& f) {
-  f(s, -1);
-  dfs(graph, s, [&](int v, int p) { f(v, p); });
+  dfs_ord(graph, s, f, [](auto&&, auto&&) {});
 }
 
 // f(edge, par)

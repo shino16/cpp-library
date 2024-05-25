@@ -21,7 +21,7 @@ void bfs(const G& graph, int s, F&& f) {
 template <class G, class F>
 void bfs_ord(const G& graph, int s, F&& f) {
   f(s, -1);
-  dfs(graph, s, [&](int v, int p) { f(v, p); });
+  bfs(graph, s, [&](int v, int p) { f(v, p); });
 }
 
 template <class G>

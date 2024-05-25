@@ -202,7 +202,7 @@ class formal_power_series : public vector<T> {
     auto [k0, r] = v.front();
     assert(k0 == 0 && r != T(0));
     T ir = r.inv();
-    v.pop_front();
+    v.erase(v.begin());
     rep(i, size()) {
       for (auto [k, c] : v) {
         if (k > i) break;
