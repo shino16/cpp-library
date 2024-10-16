@@ -36,7 +36,11 @@ class lazy_segment_tree {
     return m.op(accl, accr);
   }
   void apply(int l, int r, actor_type x) {
-    if (x == a.unit()) return;
+#if __cpp_concepts
+    if constexpr (requires { A::operator ==; }) {
+      if (x == a.unit()) return;
+    }
+#endif
     flush(trunc(l + size()));
     flush(trunc(r + size()) - 1);
     for (int L = l + size(), R = r + size(); L < R; L >>= 1, R >>= 1) {
@@ -73,11 +77,14 @@ class lazy_segment_tree {
     if (i < size()) lazy[i] = a.op(lazy[i], x);
   }
   void push(int i) {
-    if (lazy[i] != a.unit()) {
-      apply(i << 1, lazy[i]);
-      apply(i << 1 | 1, lazy[i]);
-      lazy[i] = a.unit();
+#if __cpp_concepts
+    if constexpr (requires { A::operator ==; }) {
+      if (lazy[i] == a.unit()) return;
     }
+#endif
+    apply(i << 1, lazy[i]);
+    apply(i << 1 | 1, lazy[i]);
+    lazy[i] = a.unit();
   }
   void upd(int i) { data[i] = m.op(data[i << 1], data[i << 1 | 1]); }
   void flush(int i) {
