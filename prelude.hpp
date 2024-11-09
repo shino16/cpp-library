@@ -12,20 +12,11 @@ using vc = vector<char>;
 #define repr2(i, m, n) for (auto i = (n); i-- > (m);)
 #define repr(i, n) repr2(i, 0, n)
 #define all(x) begin(x), end(x)
-#define COMP_BY(func)                           \
-  ([&](auto&& COMP_BY__1, auto&& COMP_BY__2) {  \
-    return func(COMP_BY__1) < func(COMP_BY__2); \
-  })
-template <class T>
-auto ndvec(int n, T e) {
-  return vector(n, e);
-}
-template <class... Ts>
-auto ndvec(int n, Ts... e) {
-  return vector(n, ndvec(e...));
-}
-decltype(auto) max(const auto& a, const auto& b) { return a < b ? b : a; }
-decltype(auto) min(const auto& a, const auto& b) { return b < a ? b : a; }
+auto ndvec(int n, auto e) { return vector(n, e); }
+auto ndvec(int n, auto ...e) { return vector(n, ndvec(e...)); }
+auto comp_key(auto&& f) { return [&](auto&& a, auto&& b) { return f(a) < f(b); }; }
+auto& max(const auto& a, const auto& b) { return a < b ? b : a; }
+auto& min(const auto& a, const auto& b) { return b < a ? b : a; }
 #if __cpp_lib_ranges
 namespace R = std::ranges;
 namespace V = std::views;
